@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EducaInclui Pascal | Meus Cursos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/administrative.css" />
+</head>
+<body>
+    <div class="page">
+        <div class="admin-dashboard">
+            <aside class="sidebar profissional">
+                <div class="sidebar-profile">
+                    <div class="avatar-column">
+                        <div class="avatar">A</div>
+                    </div>
+                    <div class="profile-info">
+                        <strong>Escola</strong>
+                    </div>
+                </div>
+
+                <div class="sidebar-body">
+                    <nav class="sidebar-nav">
+                        <a href="administrative.html"><span class="nav-icon nav-icon-dashboard"></span>Dashboard</a>
+                        <a href="courses.html" class="active"><span class="nav-icon nav-icon-courses"></span>Meu cursos</a>
+                    </nav>
+
+                    <div class="sidebar-bottom">
+                        <a href="../../index.html" class="logout-link"><span class="nav-icon nav-icon-logout"></span>Sair</a>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="admin-main">
+                <section class="admin-header">
+                    <h1>Meus cursos</h1>
+                    <p>Gerencie os cursos disponíveis para os alunos e atualize as informações ou conteúdo sempre que precisar.</p>
+                </section>
+
+                <section class="courses-panel">
+                    <div class="courses-actions">
+                        <button class="primary-button" type="button" id="openAddCourseModal">Adicionar novo curso</button>
+                    </div>
+
+                    <div class="courses-box">
+                        <div class="courses-table">
+                            <div class="courses-table-header">
+                                <span>Curso</span>
+                                <span>Tópico</span>
+                                <span>Aulas</span>
+                                <span>Ações</span>
+                            </div>
+                            <div id="coursesTableBody"></div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Modal 1: Adicionar Curso -->
+            <div class="modal" id="addCourseModal" aria-hidden="true">
+                <div class="modal-content" role="dialog" aria-modal="true">
+                    <button class="modal-close" type="button" id="closeAddCourseModal" aria-label="Fechar">&times;</button>
+                    <h2>Adicionar novo curso</h2>
+                    <form class="course-form" id="addCourseForm" novalidate>
+                        <label>
+                            Nome do curso
+                            <input type="text" id="newCourseNameInput" placeholder="Digite o nome do curso" />
+                        </label>
+                        <label>
+                            Tópico
+                            <input type="text" id="newCourseTopicInput" placeholder="Ex: Web, Design, Marketing" />
+                        </label>
+                        <div class="file-input-field">
+                            <span class="file-input-label">Foto do curso (opcional)</span>
+                            <div class="file-input-wrap">
+                                <input type="file" id="newCourseImageInput" accept="image/*" />
+                                <button type="button" class="file-btn" id="triggerCourseImage">Escolher arquivo</button>
+                                <span class="file-name-display" id="courseImageName">Nenhum arquivo escolhido</span>
+                            </div>
+                        </div>
+                        <div class="course-image-preview" id="courseImagePreview" style="display:none">
+                            <img id="courseImagePreviewImg" src="" alt="Preview" />
+                        </div>
+                        <div class="form-actions">
+                            <button class="primary-button" type="submit">Adicionar curso</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal 2: Gerenciar Curso -->
+            <div class="modal" id="manageCourseModal" aria-hidden="true">
+                <div class="modal-content modal-content-lg" role="dialog" aria-modal="true">
+                    <button class="modal-close" type="button" id="closeManageCourseModal" aria-label="Fechar">&times;</button>
+                    <h2 id="manageCourseTitle"></h2>
+                    <div class="manage-course-body">
+                        <div class="manage-section-header">
+                            <span class="manage-section-label">Aulas</span>
+                            <button class="primary-button" type="button" id="openAddLessonBtn">Adicionar aula</button>
+                        </div>
+                        <div class="manage-lessons-list" id="manageLessonsList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal 3: Adicionar / Editar Aula -->
+            <div class="modal modal-top" id="lessonModal" aria-hidden="true">
+                <div class="modal-content modal-content-lg" role="dialog" aria-modal="true">
+                    <button class="modal-close" type="button" id="closeLessonModal" aria-label="Fechar">&times;</button>
+                    <h2 id="lessonModalTitle">Adicionar aula</h2>
+                    <form class="course-form" id="lessonForm" novalidate>
+                        <label>
+                            Nome da aula
+                            <input type="text" id="lessonNameInput" placeholder="Digite o nome da aula" />
+                        </label>
+                        <label>
+                            Descrição
+                            <textarea id="lessonDescInput" placeholder="Descreva o conteúdo desta aula"></textarea>
+                        </label>
+                        <div class="file-input-field">
+                            <span class="file-input-label">Vídeo da aula (.mp4)</span>
+                            <div class="file-input-wrap">
+                                <input type="file" id="lessonVideoInput" accept=".mp4,video/mp4" />
+                                <button type="button" class="file-btn" id="triggerLessonVideo">Escolher arquivo</button>
+                                <span class="file-name-display" id="lessonVideoName">Nenhum arquivo escolhido</span>
+                            </div>
+                        </div>
+                        <p class="video-current-hint" id="videoCurrentHint"></p>
+                        <div class="questions-section">
+                            <div class="manage-section-header">
+                                <span class="manage-section-label">Perguntas</span>
+                                <button class="add-question-btn" type="button" id="addQuestionBtn" title="Adicionar pergunta">+</button>
+                            </div>
+                            <div class="questions-list" id="questionsList">
+                                <p class="manage-empty">Nenhuma pergunta adicionada.</p>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="primary-button" type="submit">Salvar aula</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../js/utils/Dom.js"></script>
+    <script src="../js/models/Question.js"></script>
+    <script src="../js/models/Lesson.js"></script>
+    <script src="../js/models/Course.js"></script>
+    <script src="../js/core/CoursesDB.js"></script>
+    <script src="../js/core/VideoDB.js"></script>
+    <script src="../js/pages/CoursesPage.js"></script>
+</body>
+</html>

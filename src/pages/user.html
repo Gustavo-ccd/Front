@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EducaInclui Pascal | Busca de Cursos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/user.css" />
+</head>
+<body>
+    <div class="page">
+        <div class="user-dashboard">
+            <aside class="sidebar">
+                <div class="sidebar-profile">
+                    <div class="avatar-column">
+                        <div class="avatar">U</div>
+                        <button class="sidebar-profile-button" data-modal="profile">Meu Perfil</button>
+                    </div>
+                    <div class="profile-info">
+                        <strong>Usuário EducaInclui Pascal</strong>
+                        <span>Olá, bem-vindo</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-body">
+                    <nav class="sidebar-nav">
+                        <a href="#" class="active"><span class="nav-icon nav-icon-home"></span>Início</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <main class="search-page">
+                <section class="search-panel">
+                    <div class="search-header">
+                        <h1>Buscar cursos para sua próxima jornada</h1>
+                        <p>Explore aulas, trilhas e temas mais procurados na plataforma. Use os filtros abaixo para encontrar rapidamente o que você precisa.</p>
+                    </div>
+
+                    <div class="search-box">
+                        <div class="search-field">
+                            <input type="search" id="searchInput" placeholder="Pesquisar cursos, habilidades ou tópicos" />
+                            <button class="search-button" aria-label="Pesquisar"><span class="search-icon"></span></button>
+                        </div>
+                    </div>
+
+                    <div class="filter-buttons" id="filterButtons">
+                        <button class="active" data-filter="all">Todos</button>
+                    </div>
+                </section>
+
+                <section class="course-main">
+                    <div class="course-list" id="courseList"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-conteudo">
+            <button class="modal-fechar" id="fecharModal">X</button>
+            <h2 id="modalTitulo"></h2>
+            <div id="modalCorpo"></div>
+        </div>
+    </div>
+
+    <script src="../js/utils/Dom.js"></script>
+    <script src="../js/models/Question.js"></script>
+    <script src="../js/models/Lesson.js"></script>
+    <script src="../js/models/Course.js"></script>
+    <script src="../js/core/CoursesDB.js"></script>
+    <script src="../js/core/VideoDB.js"></script>
+    <script src="../js/core/Session.js"></script>
+    <script src="../js/pages/UserPage.js"></script>
+</body>
+</html>
