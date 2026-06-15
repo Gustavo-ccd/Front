@@ -455,7 +455,7 @@
     z-index:1000;
 }
 
-.modal-active{
+.modal.modal-active{
     display:flex;
 }
 

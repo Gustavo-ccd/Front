@@ -24,7 +24,8 @@ export async function getById(id) {
 export async function create(name, topic, imageFile = null) {
   try {
     const courses = CoursesDB.load()
-    const newId = courses.length ? Math.max(...courses.map(c => c.id)) + 1 : 1
+    const ids = courses.map(c => Number(c.id)).filter(n => !isNaN(n))
+    const newId = ids.length ? Math.max(...ids) + 1 : 1
     if (imageFile) await VideoDB.save(`course_img_${newId}`, imageFile)
     const course = new Course({ id: newId, name, topic, lessons: [] })
     CoursesDB.save([...courses, course])
@@ -46,8 +47,9 @@ export async function remove(id) {
 
 function nextLessonId(courses) {
   const ids = []
-  courses.forEach(c => c.lessons.forEach(l => ids.push(l.id)))
-  return ids.length ? Math.max(...ids) + 1 : 1
+  courses.forEach(c => c.lessons.forEach(l => ids.push(Number(l.id))))
+  const valid = ids.filter(n => !isNaN(n))
+  return valid.length ? Math.max(...valid) + 1 : 1
 }
 
 export async function addLesson(courseId, { name, desc, videoFile, questions }) {

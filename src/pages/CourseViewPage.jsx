@@ -37,9 +37,9 @@ function GabaritoPanel({ lesson, displayedCount }) {
 
         return (
           <div className="cv-gab-item" key={i}>
-            <p className="cv-gab-q"><strong>{i + 1}.</strong> {q.text}</p>
             {shown ? (
               <>
+                <p className="cv-gab-q"><strong>{i + 1}.</strong> {q.text}</p>
                 <button
                   className={`cv-gab-reveal-btn${revealed[i] ? ' active' : ''}`}
                   type="button"
@@ -50,7 +50,10 @@ function GabaritoPanel({ lesson, displayedCount }) {
                 {revealed[i] && <div className="cv-gab-answer">{answerContent}</div>}
               </>
             ) : (
-              <span className="cv-gab-locked">Responda a pergunta no vídeo para desbloquear</span>
+              <>
+                <p className="cv-gab-q cv-gab-q--locked"><strong>{i + 1}.</strong> ???</p>
+                <span className="cv-gab-locked">Responda a pergunta no vídeo para desbloquear</span>
+              </>
             )}
           </div>
         )

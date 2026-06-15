@@ -333,8 +333,8 @@ export default function CoursesPage() {
     if (updatedCourse) setCourses(prev => prev.map(c => c.id === managingCourseId ? updatedCourse : c))
   }
 
-  const managingCourse = courses.find(c => c.id === managingCourseId) || null
-  const editingLesson = managingCourse?.lessons.find(l => l.id === editingLessonId) || null
+  const managingCourse = courses.find(c => Number(c.id) === Number(managingCourseId)) || null
+  const editingLesson = managingCourse?.lessons.find(l => Number(l.id) === Number(editingLessonId)) || null
 
   return (
     <div className="page">
@@ -392,8 +392,8 @@ export default function CoursesPage() {
                       <span>{c.topic}</span>
                       <span>{c.lessonCount}</span>
                       <div className="courses-row-actions">
-                        <button className="secondary-button" type="button" onClick={() => setManagingCourseId(c.id)}>Editar</button>
-                        <button className="remove-button" type="button" onClick={() => handleDeleteCourse(c.id)}>Deletar</button>
+                        <button className="secondary-button" type="button" onClick={() => setManagingCourseId(Number(c.id))}>Editar</button>
+                        <button className="remove-button" type="button" onClick={() => handleDeleteCourse(Number(c.id))}>Deletar</button>
                       </div>
                     </div>
                   ))

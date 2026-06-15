@@ -561,6 +561,12 @@
     line-height:1.5;
 }
 
+.cv-gab-q--locked{
+    color:var(--muted);
+    opacity:.5;
+    font-style:italic;
+}
+
 .cv-gab-reveal-btn{
     align-self:flex-start;
     padding:4px 12px;
