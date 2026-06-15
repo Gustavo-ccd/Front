@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../css/user.css'
-import CoursesDB from '../lib/CoursesDB'
-import VideoDB from '../lib/VideoDB'
-import Session from '../lib/Session'
+import { getAll } from '../api/courses'
+import { getVideo } from '../api/videos'
+import { logout } from '../api/auth'
 
 function ProfileModal({ onClose, onLogout }) {
   return (
@@ -36,22 +36,24 @@ export default function UserPage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const loaded = CoursesDB.load()
-    setCourses(loaded)
-    loadCourseImages(loaded)
+    getAll().then(({ data }) => {
+      const list = data || []
+      setCourses(list)
+      loadCourseImages(list)
+    })
   }, [])
 
   async function loadCourseImages(list) {
     const images = {}
     for (const c of list) {
-      const blob = await VideoDB.get(`course_img_${c.id}`)
+      const { data: blob } = await getVideo(`course_img_${c.id}`)
       if (blob) images[c.id] = URL.createObjectURL(blob)
     }
     setCourseImages(images)
   }
 
-  function handleLogout() {
-    Session.clear()
+  async function handleLogout() {
+    await logout()
     navigate('/')
   }
 

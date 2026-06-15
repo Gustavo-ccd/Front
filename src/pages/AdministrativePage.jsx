@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../css/administrative.css'
-import CoursesDB from '../lib/CoursesDB'
-import Session from '../lib/Session'
+import { getAll } from '../api/courses'
+import { logout } from '../api/auth'
 
 export default function AdministrativePage() {
   const [courses, setCourses] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    setCourses(CoursesDB.load())
+    getAll().then(({ data }) => setCourses(data || []))
   }, [])
 
-  function handleLogout() {
-    Session.clear()
+  async function handleLogout() {
+    await logout()
     navigate('/')
   }
 

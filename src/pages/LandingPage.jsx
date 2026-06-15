@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/landing.css'
-import CoursesDB from '../lib/CoursesDB'
-import Session from '../lib/Session'
+import { getAll } from '../api/courses'
+import { login } from '../api/auth'
 
 function LoginModal({ onLogin }) {
   const [email, setEmail] = useState('')
@@ -63,13 +63,12 @@ export default function LandingPage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    setCourses(CoursesDB.load())
+    getAll().then(({ data }) => setCourses(data || []))
   }, [])
 
-  function handleLogin(email, senha) {
-    const user = Session.authenticate(email, senha)
-    if (!user) return false
-    Session.set(user)
+  async function handleLogin(email, senha) {
+    const { data: user, error } = await login(email, senha)
+    if (error || !user) return false
     navigate(user.tipo === 'cliente' ? '/user' : '/admin')
     return true
   }

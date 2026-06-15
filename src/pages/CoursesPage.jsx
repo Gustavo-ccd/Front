@@ -1,11 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../css/administrative.css'
-import CoursesDB from '../lib/CoursesDB'
-import VideoDB from '../lib/VideoDB'
-import Session from '../lib/Session'
-import Course from '../models/Course'
-import Lesson from '../models/Lesson'
+import { getAll, create, remove, addLesson, updateLesson, removeLesson } from '../api/courses'
+import { logout } from '../api/auth'
 import Question from '../models/Question'
 
 // ── Question item inside lesson form ──────────────────────────────────────────
@@ -293,8 +290,6 @@ function LessonModal({ lesson, onClose, onSubmit }) {
 // ── Main CoursesPage ──────────────────────────────────────────────────────────
 export default function CoursesPage() {
   const [courses, setCourses] = useState([])
-  const [nextCourseId, setNextCourseId] = useState(1)
-  const [nextLessonId, setNextLessonId] = useState(1)
   const [showAddCourse, setShowAddCourse] = useState(false)
   const [managingCourseId, setManagingCourseId] = useState(null)
   const [editingLessonId, setEditingLessonId] = useState(null)
@@ -302,79 +297,40 @@ export default function CoursesPage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const loaded = CoursesDB.load()
-    setCourses(loaded)
-    if (loaded.length) {
-      setNextCourseId(Math.max(...loaded.map(c => c.id)) + 1)
-      let maxLessonId = 0
-      loaded.forEach(c => c.lessons.forEach(l => { if (l.id > maxLessonId) maxLessonId = l.id }))
-      setNextLessonId(maxLessonId + 1)
-    }
+    getAll().then(({ data }) => setCourses(data || []))
   }, [])
 
-  function handleLogout() {
-    Session.clear()
+  async function handleLogout() {
+    await logout()
     navigate('/')
   }
 
   // ── Course CRUD ──────────────────────────────────────────────────────────────
   async function handleAddCourse(name, topic, imageFile) {
-    const newId = nextCourseId
-    setNextCourseId(id => id + 1)
-    const newCourse = new Course({ id: newId, name, topic, lessons: [] })
-    const updated = [...courses, newCourse]
-    if (imageFile) await VideoDB.save(`course_img_${newId}`, imageFile)
-    CoursesDB.save(updated)
-    setCourses(updated)
+    const { data: newCourse } = await create(name, topic, imageFile)
+    if (newCourse) setCourses(prev => [...prev, newCourse])
     setShowAddCourse(false)
   }
 
-  function handleDeleteCourse(courseId) {
-    const updated = courses.filter(c => c.id !== courseId)
-    CoursesDB.save(updated)
-    setCourses(updated)
+  async function handleDeleteCourse(courseId) {
+    await remove(courseId)
+    setCourses(prev => prev.filter(c => c.id !== courseId))
   }
 
   // ── Lesson CRUD ──────────────────────────────────────────────────────────────
   async function handleSaveLesson({ name, desc, videoFile, questions }) {
-    const updated = courses.map(c => {
-      if (c.id !== managingCourseId) return c
-      let newLessons
-      if (editingLessonId) {
-        newLessons = c.lessons.map(l => {
-          if (l.id !== editingLessonId) return l
-          return new Lesson({
-            id: l.id,
-            name,
-            desc,
-            videoName: videoFile ? videoFile.name : l.videoName,
-            questions,
-          })
-        })
-      } else {
-        const lessonId = nextLessonId
-        setNextLessonId(id => id + 1)
-        newLessons = [...c.lessons, new Lesson({ id: lessonId, name, desc, videoName: videoFile ? videoFile.name : '', questions })]
-        if (videoFile) VideoDB.save(`lesson_${lessonId}`, videoFile)
-      }
-      if (videoFile && editingLessonId) {
-        VideoDB.save(`lesson_${editingLessonId}`, videoFile)
-      }
-      return new Course({ id: c.id, name: c.name, topic: c.topic, lessons: newLessons })
-    })
-    CoursesDB.save(updated)
-    setCourses(updated)
+    const payload = { name, desc, videoFile, questions }
+    const { data: updatedCourse } = editingLessonId
+      ? await updateLesson(managingCourseId, editingLessonId, payload)
+      : await addLesson(managingCourseId, payload)
+    if (updatedCourse) setCourses(prev => prev.map(c => c.id === managingCourseId ? updatedCourse : c))
     setShowLessonModal(false)
     setEditingLessonId(null)
   }
 
-  function handleDeleteLesson(lessonId) {
-    const updated = courses.map(c => {
-      if (c.id !== managingCourseId) return c
-      return new Course({ id: c.id, name: c.name, topic: c.topic, lessons: c.lessons.filter(l => l.id !== lessonId) })
-    })
-    CoursesDB.save(updated)
-    setCourses(updated)
+  async function handleDeleteLesson(lessonId) {
+    const { data: updatedCourse } = await removeLesson(managingCourseId, lessonId)
+    if (updatedCourse) setCourses(prev => prev.map(c => c.id === managingCourseId ? updatedCourse : c))
   }
 
   const managingCourse = courses.find(c => c.id === managingCourseId) || null

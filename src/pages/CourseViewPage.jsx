@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import '../css/course-view.css'
-import CoursesDB from '../lib/CoursesDB'
-import VideoDB from '../lib/VideoDB'
+import { getAll } from '../api/courses'
+import { getVideo } from '../api/videos'
+import { getNote, saveNote } from '../api/notes'
+import { getDone, markDone } from '../api/progress'
 import Queue from '../lib/Queue'
 import Question from '../models/Question'
 
@@ -180,13 +182,13 @@ export default function CourseViewPage() {
 
   // Load course once
   useEffect(() => {
-    const courses = CoursesDB.load()
-    const found = courses.find(c => c.id === Number(courseId))
-    if (!found) { setNotFound(true); return }
-    courseRef.current = found
-    setCourse(found)
-    const done = new Set(JSON.parse(localStorage.getItem(`pascal_done_${found.id}`) || '[]'))
-    setDoneSet(done)
+    getAll().then(({ data: courses }) => {
+      const found = (courses || []).find(c => c.id === Number(courseId))
+      if (!found) { setNotFound(true); return }
+      courseRef.current = found
+      setCourse(found)
+      getDone(found.id).then(({ data }) => setDoneSet(data || new Set()))
+    })
   }, [courseId])
 
   // Build thresholds
@@ -246,14 +248,12 @@ export default function CourseViewPage() {
   }, [showNextOverlay])
 
   // Video ended
-  const onVideoEnded = useCallback(() => {
+  const onVideoEnded = useCallback(async () => {
     const c = courseRef.current
     if (!c) return
     const lesson = c.lessons[currentIndexRef.current]
-    const done = new Set(JSON.parse(localStorage.getItem(`pascal_done_${c.id}`) || '[]'))
-    done.add(lesson.id)
-    localStorage.setItem(`pascal_done_${c.id}`, JSON.stringify([...done]))
-    setDoneSet(new Set(done))
+    const { data: done } = await markDone(c.id, lesson.id)
+    setDoneSet(done || new Set())
   }, [])
 
   // Load lesson effect
@@ -304,7 +304,7 @@ export default function CourseViewPage() {
 
     // Load video
     if (lesson.hasVideo) {
-      VideoDB.get(`lesson_${lesson.id}`).then(blob => {
+      getVideo(`lesson_${lesson.id}`).then(({ data: blob }) => {
         if (!blob) return
         const url = URL.createObjectURL(blob)
         blobUrlRef.current = url
@@ -317,7 +317,7 @@ export default function CourseViewPage() {
     }
 
     // Load notepad
-    setNotepad(localStorage.getItem(`pascal_note_${course.id}_${lesson.id}`) || '')
+    getNote(course.id, lesson.id).then(({ data }) => setNotepad(data || ''))
     setSavedIndicator(false)
 
     return () => {
@@ -357,8 +357,7 @@ export default function CourseViewPage() {
     const lesson = c.lessons[currentIndexRef.current]
     if (!lesson) return
     saveTimerRef.current = setTimeout(() => {
-      localStorage.setItem(`pascal_note_${c.id}_${lesson.id}`, value)
-      setSavedIndicator(true)
+      saveNote(c.id, lesson.id, value).then(() => setSavedIndicator(true))
     }, 700)
   }
 
