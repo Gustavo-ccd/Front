@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/landing.css'
 import { getAll } from '../api/courses'
+import { getVideo } from '../api/videos'
 import { login } from '../api/auth'
 
 function LoginModal({ onLogin }) {
@@ -60,10 +61,22 @@ function RegisterModal() {
 export default function LandingPage() {
   const [modalType, setModalType] = useState(null)
   const [courses, setCourses] = useState([])
+  const [courseImages, setCourseImages] = useState({})
   const navigate = useNavigate()
 
   useEffect(() => {
-    getAll().then(({ data }) => setCourses(data || []))
+    getAll().then(({ data }) => {
+      const list = data || []
+      setCourses(list)
+      const images = {}
+      Promise.all(
+        list.map(c =>
+          getVideo(`course_img_${c.id}`).then(({ data: blob }) => {
+            if (blob) images[c.id] = URL.createObjectURL(blob)
+          })
+        )
+      ).then(() => setCourseImages(images))
+    })
   }, [])
 
   async function handleLogin(email, senha) {
@@ -135,9 +148,17 @@ export default function LandingPage() {
             <div className="cursos-grid">
               {courses.map(c => (
                 <div className="curso-card-landing" key={c.id}>
-                  <div className="curso-card-placeholder-landing">
-                    <span>{c.topicInitial}</span>
-                  </div>
+                  {courseImages[c.id] ? (
+                    <img
+                      src={courseImages[c.id]}
+                      alt={c.name}
+                      className="curso-card-img-landing"
+                    />
+                  ) : (
+                    <div className="curso-card-placeholder-landing">
+                      <span>{c.topicInitial}</span>
+                    </div>
+                  )}
                   <h3>{c.name}</h3>
                   <p>{c.topic}</p>
                   <span className="curso-card-meta">{c.lessonCount} aula{c.lessonCount !== 1 ? 's' : ''}</span>

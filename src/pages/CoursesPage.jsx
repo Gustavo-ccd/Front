@@ -346,6 +346,7 @@ export default function CoursesPage() {
             </div>
             <div className="profile-info">
               <strong>Escola</strong>
+              <span className="profile-role">Administrador</span>
             </div>
           </div>
 

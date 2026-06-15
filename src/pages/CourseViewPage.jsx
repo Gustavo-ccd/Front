@@ -331,17 +331,6 @@ export default function CourseViewPage() {
     }
   }, [currentIndex, course])
 
-  // Attach video event listeners
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-    video.addEventListener('timeupdate', onVideoTimeUpdate)
-    video.addEventListener('ended', onVideoEnded)
-    return () => {
-      video.removeEventListener('timeupdate', onVideoTimeUpdate)
-      video.removeEventListener('ended', onVideoEnded)
-    }
-  }, [onVideoTimeUpdate, onVideoEnded])
 
   // Cleanup on unmount
   useEffect(() => {
@@ -426,6 +415,8 @@ export default function CourseViewPage() {
               <video
                 ref={videoRef}
                 controls
+                onTimeUpdate={onVideoTimeUpdate}
+                onEnded={onVideoEnded}
                 style={{ display: videoSrc ? 'block' : 'none', width: '100%', height: '100%' }}
               />
               <div className="cv-no-video" style={{ display: videoSrc ? 'none' : 'flex' }}>
