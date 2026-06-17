@@ -50,11 +50,11 @@ npm run preview
 
 | Arquivo | Título | Auth check (inline `<script>`) | React entry |
 |---|---|---|---|
-| `index.html` | Landing | Nenhum | `src/entries/landing.jsx` |
-| `pages/user.html` | Meus Cursos | `tipo === 'cliente'` → redireciona para `/index.html` | `src/entries/user.jsx` |
-| `pages/administrative.html` | Dashboard | `tipo in [professor,educacional,empresarial]` | `src/entries/administrative.jsx` |
-| `pages/course.html` | Gerenciar Cursos | idem administrative | `src/entries/course.jsx` |
-| `pages/courseView.html` | Aula | `tipo === 'cliente'` | `src/entries/courseview.jsx` |
+| `index.html` | Landing | Nenhum | `font/src/entries/landing.jsx` |
+| `font/pages/user.html` | Meus Cursos | `tipo === 'cliente'` → redireciona para `/index.html` | `font/src/entries/user.jsx` |
+| `font/pages/administrative.html` | Dashboard | `tipo in [professor,educacional,empresarial]` | `font/src/entries/administrative.jsx` |
+| `font/pages/course.html` | Gerenciar Cursos | idem administrative | `font/src/entries/course.jsx` |
+| `font/pages/courseView.html` | Aula | `tipo === 'cliente'` | `font/src/entries/courseview.jsx` |
 
 **Navegação:** links HTML `<a href="/pages/user.html">` — sem React Router.
 **Auth nas páginas protegidas:** `<script>` inline no `<head>` checa `localStorage.usuarioLogado` e redireciona antes do React carregar.
@@ -210,13 +210,14 @@ Todas as funções usam localStorage + IndexedDB — sem servidor.
 | `--muted` | `#8b949e` | Texto secundário |
 | `--border` | `#30363d` | Bordas |
 
-| Arquivo | Importado em |
+| Arquivo | Usado em |
 |---|---|
-| `global.css` | Todos os entries (via Vite) |
-| `landing.css` | `entries/landing.jsx` |
-| `user.css` | `entries/user.jsx` |
-| `administrative.css` | `entries/administrative.jsx` e `entries/course.jsx` |
-| `course-view.css` | `entries/courseview.jsx` |
+| `global.css` | Todas as páginas — variáveis, reset, modal `.ativo` (landing/user) |
+| `landing.css` | `index.html` — header, hero, planos, catálogo, apresentação |
+| `user.css` | `user.html` — sidebar, busca, cards de cursos |
+| `administrative.css` | `administrative.html` e `course.html` — layout sidebar + dashboard |
+| `course.css` | `course.html` apenas — tabela de cursos, modais, formulários, questões |
+| `courseView.css` | `courseView.html` — player, abas, overlay de questões |
 
 ---
 
@@ -238,3 +239,8 @@ Todas as funções usam localStorage + IndexedDB — sem servidor.
 | 2026-06-16 | Todos | **Refatoração MPA**: convertido de SPA React para 5 HTML estáticos + React por página. Backend Express adicionado. Armazenamento migrado de localStorage/IndexedDB para `courses.json` + pastas `/photos/` `/videos/`. `react-router-dom` removido. |
 | 2026-06-16 | `src/api/courses.js`, `src/lib/VideoDB.js`, `src/models/Course.js`, `src/models/Lesson.js`, `src/entries/course.jsx`, `src/entries/courseview.jsx`, `src/entries/user.jsx`, `src/entries/landing.jsx`, `vite.config.js`, `package.json`, `vercel.json` | **Remoção do backend Express**: migrado para armazenamento 100% browser. Metadados de cursos + fotos (base64) → localStorage (`pascal_courses`). Vídeos (blobs) → IndexedDB (`pascal_videos`) via `VideoDB.js` recriado. `server.js`, express, multer, cors, concurrently removidos. Deploy direto no Vercel. |
 | 2026-06-17 | `administrative.html`, `course.html`, `courseView.html`, `user.html` → `pages/`, `vite.config.js`, `index.html`, `src/entries/*.jsx` | **Reorganização de estrutura**: 4 HTMLs movidos para `pages/`. Apenas `index.html` permanece na raiz. Todos os links internos atualizados para `/pages/`. |
+| 2026-06-17 | `src/`, `pages/`, `public/` → `font/`, `vite.config.js`, `index.html`, `font/pages/*.html` | **Criação da pasta font/**: `src/`, `pages/` e `public/` movidos para `font/`. Raiz mantém apenas `index.html`, `.gitignore`, `CLAUDE.md`, `package.json`, `vite.config.js`, `vercel.json`. Referências `/src/entries/` atualizadas para `/font/src/entries/` em todos os HTMLs. `publicDir` atualizado no vite.config.js. |
+| 2026-06-17 | `font/pages/` reorganizado | **Reorganização da pasta pages/**: criadas 4 subpastas — `html.pages/` (4 HTMLs), `css.pages/` (5 CSS movidos de `font/src/css/`), `assets.pages/fotos/` (imagens de `public/assets/fotos/`) + `assets.pages/icons/`, `js.pages/` (JS de modais extraídos: `course-modals.js`, `user-modals.js`). `public/` deletada. Todos os caminhos de CSS, assets e navegação atualizados em todos os arquivos HTML e React. `vite.config.js` atualizado para novos paths dos HTMLs. |
+| 2026-06-17 | `font/src/` reorganizado | **Separação por tipo em src/**: criadas `react.src/` (todos .jsx: `App.jsx`, `main.jsx`, `entries/`, `pages/`) e `js.src/` (todos .js: `api/`, `lib/`, `models/`, `assets/`). Todos os imports relativos atualizados (`../api/` → `../../js.src/api/` etc.). Referências `/font/src/entries/` nos HTMLs atualizadas para `/font/src/react.src/entries/`. `course-modals.js` atualizado para `/font/src/js.src/api/courses.js`. |
+| 2026-06-17 | `index.html`, `font/pages/html.pages/user.html`, `font/pages/js.pages/landingModals.js` (DELETADO), `font/pages/js.pages/userModals.js` (DELETADO) | **Fix modais landing/user**: substituídas referências `<script src>` externas por scripts inline nos HTMLs (`<script>;(function(){ ... }())</script>`). Eliminados arquivos `landingModals.js` e `userModals.js` como código morto. Usuário `profissional@pascal.com` (tipo `professor`) adicionado à lista hardcoded de usuários. |
+| 2026-06-17 | `font/pages/css.pages/` todos | **Refactoring CSS**: removido CSS morto (tech-grid, charts/analytics, `.educacional`/`.empresarial`, paginação, `.course-gallery`, duplicatas). `administrative.css` 949→256 linhas; extraído `course.css` (578 linhas) com todo CSS de gerenciar cursos (tabela, modais, forms, questões). `landing.css` 452→364, `user.css` 510→360. `course.html` atualizado para linkar `course.css`. Total: 2675→2322 linhas. |

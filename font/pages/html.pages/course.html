@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EducaInclui Pascal — Gerenciar Cursos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/font/pages/css.pages/global.css" />
+  <link rel="stylesheet" href="/font/pages/css.pages/administrative.css" />
+  <link rel="stylesheet" href="/font/pages/css.pages/course.css" />
+  <script>
+    const _u = JSON.parse(localStorage.getItem('usuarioLogado') || 'null')
+    const _adminRoles = ['professor', 'educacional', 'empresarial']
+    if (!_u || !_adminRoles.includes(_u.tipo)) window.location.replace('/index.html')
+  </script>
+  <style>html,body{background:#0d1117;margin:0;padding:0}</style>
+</head>
+<body>
+<div class="page">
+  <div class="admin-dashboard">
+
+    <!-- SIDEBAR: estático -->
+    <aside class="sidebar profissional">
+      <div class="sidebar-profile">
+        <div class="avatar-column">
+          <div class="avatar">A</div>
+        </div>
+        <div class="profile-info">
+          <strong>Escola</strong>
+          <span class="profile-role">Administrador</span>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <nav class="sidebar-nav">
+          <a href="/font/pages/html.pages/administrative.html">
+            <span class="nav-icon nav-icon-dashboard"></span>Dashboard
+          </a>
+          <a href="/font/pages/html.pages/course.html" class="active">
+            <span class="nav-icon nav-icon-courses"></span>Meus cursos
+          </a>
+        </nav>
+        <div class="sidebar-bottom">
+          <a href="#" class="logout-link" id="logout-btn">
+            <span class="nav-icon nav-icon-logout"></span>Sair
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN: cabeçalho estático + React injeta tabela de cursos e modais -->
+    <main class="admin-main">
+      <section class="admin-header">
+        <h1>Meus cursos</h1>
+        <p>Gerencie os cursos disponíveis para os alunos e atualize as informações ou conteúdo sempre que precisar.</p>
+      </section>
+      <div id="courses-app"></div>
+    </main>
+
+  </div>
+</div>
+
+<!-- MODAL: Adicionar Curso -->
+<div class="modal" id="add-course-modal">
+  <div class="modal-content">
+    <button class="modal-close" type="button">&times;</button>
+    <h2>Adicionar novo curso</h2>
+    <form class="course-form" id="add-course-form" novalidate>
+      <label>
+        Nome do curso
+        <input type="text" id="add-course-name" placeholder="Digite o nome do curso" />
+      </label>
+      <label>
+        Tópico
+        <input type="text" id="add-course-topic" placeholder="Ex: Web, Design, Marketing" />
+      </label>
+      <div class="file-input-field">
+        <span class="file-input-label">Foto do curso (opcional)</span>
+        <div class="file-input-wrap">
+          <input type="file" id="add-course-image" accept="image/*" style="display:none" />
+          <button type="button" id="add-course-image-btn" class="file-btn">Escolher arquivo</button>
+          <span class="file-name-display" id="add-course-filename">Nenhum arquivo escolhido</span>
+        </div>
+      </div>
+      <div class="course-image-preview" id="add-course-preview-wrap" style="display:none">
+        <img id="add-course-preview" src="" alt="Preview" />
+      </div>
+      <div class="form-actions">
+        <button class="primary-button" type="submit">Adicionar curso</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Gerenciar Curso -->
+<div class="modal" id="manage-course-modal">
+  <div class="modal-content modal-content-lg">
+    <button class="modal-close" type="button">&times;</button>
+    <h2 id="manage-course-title"></h2>
+    <div class="manage-course-body">
+      <div class="manage-section-header">
+        <span class="manage-section-label">Aulas</span>
+        <button class="primary-button" type="button" id="manage-add-lesson-btn">Adicionar aula</button>
+      </div>
+      <div class="manage-lessons-list" id="manage-lessons-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Adicionar / Editar Aula -->
+<div class="modal modal-top" id="lesson-modal">
+  <div class="modal-content modal-content-lg">
+    <button class="modal-close" type="button">&times;</button>
+    <h2 id="lesson-modal-title">Adicionar aula</h2>
+    <form class="course-form" id="lesson-form" novalidate>
+      <label>
+        Nome da aula
+        <input type="text" id="lesson-name" placeholder="Digite o nome da aula" />
+      </label>
+      <label>
+        Descrição
+        <textarea id="lesson-desc" placeholder="Descreva o conteúdo desta aula"></textarea>
+      </label>
+      <div class="file-input-field">
+        <span class="file-input-label">Vídeo da aula (.mp4)</span>
+        <div class="file-input-wrap">
+          <input type="file" id="lesson-video" accept=".mp4,video/mp4" style="display:none" />
+          <button type="button" id="lesson-video-btn" class="file-btn">Escolher arquivo</button>
+          <span class="file-name-display" id="lesson-video-filename">Nenhum arquivo escolhido</span>
+        </div>
+      </div>
+      <p class="video-current-hint" id="lesson-video-current" style="display:none"></p>
+      <div class="questions-section">
+        <div class="manage-section-header">
+          <span class="manage-section-label">Perguntas</span>
+          <button class="add-question-btn" type="button" id="add-question-btn" title="Adicionar pergunta">+</button>
+        </div>
+        <div class="questions-list" id="questions-list">
+          <p class="manage-empty" id="no-questions-msg">Nenhuma pergunta adicionada.</p>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="primary-button" type="submit">Salvar aula</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="/font/pages/js.pages/courseModals.js"></script>
+
+<script>
+  document.getElementById('logout-btn').addEventListener('click', e => {
+    e.preventDefault()
+    localStorage.removeItem('usuarioLogado')
+    window.location.href = '/index.html'
+  })
+</script>
+<script type="module" src="/font/src/react.src/entries/course.jsx"></script>
+</body>
+</html>
+
+
+

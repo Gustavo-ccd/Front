@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/src/css/global.css" />
-  <link rel="stylesheet" href="/src/css/landing.css" />
+  <link rel="stylesheet" href="/font/pages/css.pages/global.css" />
+  <link rel="stylesheet" href="/font/pages/css.pages/landing.css" />
   <style>html,body{background:#0d1117;margin:0;padding:0}</style>
 </head>
 <body>
@@ -34,7 +34,7 @@
         <div class="hero-letter-row"><p class="hero-letter">A</p><p class="hero-desc">Acesso a qualquer hora em qualquer dispositivo.</p></div>
         <div class="hero-letter-row"><p class="hero-letter">L</p><p class="hero-desc">Licença escalável para equipes e instituições.</p></div>
       </div>
-      <img id="ft1" src="/assets/fotos/womanNotebook.jpg" alt="Pessoa estudando usando um notebook" />
+      <img id="ft1" src="/font/pages/assets.pages/fotos/womanNotebook.jpg" alt="Pessoa estudando usando um notebook" />
     </section>
 
     <!-- PLANOS: estático -->
@@ -65,47 +65,13 @@
     <!-- APRESENTAÇÃO: estático -->
     <section class="apresentacao">
       <div class="apresentacao-fotos">
-        <div class="apresentacao-foto"><img src="/assets/fotos/c1.jpg" alt="Curso 1" /></div>
-        <div class="apresentacao-foto apresentacao-foto-center"><img src="/assets/fotos/c2.jpg" alt="Curso 2" /></div>
-        <div class="apresentacao-foto"><img src="/assets/fotos/c3.jpg" alt="Curso 3" /></div>
+        <div class="apresentacao-foto"><img src="/font/pages/assets.pages/fotos/c1.jpg" alt="Curso 1" /></div>
+        <div class="apresentacao-foto apresentacao-foto-center"><img src="/font/pages/assets.pages/fotos/c2.jpg" alt="Curso 2" /></div>
+        <div class="apresentacao-foto"><img src="/font/pages/assets.pages/fotos/c3.jpg" alt="Curso 3" /></div>
       </div>
       <div class="apres-label">Projeto Acadêmico · Apresentação</div>
       <h2>Site fictício com intuito educacional sobre o projeto EducaInclui Pascal, utilizado como base para apresentação das disciplinas AEP, FrontEnd, APOO e Mentalidade Criativa</h2>
       <p>Em nossa plataforma, os usuários podem criar e compartilhar seus próprios cursos, além de acessar uma ampla variedade de conteúdos educacionais em diversas áreas do conhecimento. Com uma interface intuitiva e recursos interativos, nosso site oferece uma experiência de aprendizado envolvente e personalizada para cada usuário.</p>
-      <div class="apres-tech-grid">
-        <div class="apres-tech-card">
-          <span class="apres-tech-icon">{ }</span>
-          <h4>Linguagens</h4>
-          <div class="apres-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript ES2022+</span></div>
-        </div>
-        <div class="apres-tech-card">
-          <span class="apres-tech-icon">⬡</span>
-          <h4>APIs do Navegador</h4>
-          <div class="apres-tags"><span>localStorage</span><span>File API</span></div>
-        </div>
-        <div class="apres-tech-card">
-          <span class="apres-tech-icon">▣</span>
-          <h4>Estrutura de Dados</h4>
-          <div class="apres-tags"><span>Fila (Queue — FIFO)</span></div>
-          <p class="apres-tech-desc">Usada para controlar a ordem de liberação das perguntas conforme o vídeo avança.</p>
-        </div>
-        <div class="apres-tech-card">
-          <span class="apres-tech-icon">◈</span>
-          <h4>Arquitetura</h4>
-          <div class="apres-tags"><span>MPA + React</span><span>Express + Node.js</span><span>JSON + File System</span></div>
-          <p class="apres-tech-desc">5 páginas HTML estáticas com React para injeção dinâmica de cursos. Backend Express para upload e persistência em arquivo.</p>
-        </div>
-        <div class="apres-tech-card">
-          <span class="apres-tech-icon">◻</span>
-          <h4>Layout &amp; Estilo</h4>
-          <div class="apres-tags"><span>CSS Grid</span><span>CSS Flexbox</span><span>CSS Custom Properties</span><span>Responsivo</span></div>
-        </div>
-        <div class="apres-tech-card apres-tech-card-highlight">
-          <span class="apres-tech-icon">✦</span>
-          <h4>Disciplinas Relacionadas</h4>
-          <div class="apres-tags"><span>AEP</span><span>FrontEnd</span><span>APOO</span><span>Mentalidade Criativa</span></div>
-        </div>
-      </div>
     </section>
 
   </main>
@@ -153,13 +119,26 @@
   </div>
 </div>
 
-<script type="module">
-  import { login } from '/src/api/auth.js'
+<script>
+;(function () {
+  const USERS = [
+    { id: 1, nome: 'Ana Lima',      email: 'cliente@pascal.com',       senha: '123', tipo: 'cliente'     },
+    { id: 2, nome: 'Escola Pascal', email: 'educacional@pascal.com',   senha: '123', tipo: 'educacional' },
+    { id: 3, nome: 'Prof. Pascal',  email: 'profissional@pascal.com',  senha: '123', tipo: 'professor'   },
+  ]
 
-  const modal = document.getElementById('modal-auth')
+  function login(email, senha) {
+    const user = USERS.find(u => u.email === email && u.senha === senha) || null
+    if (user) localStorage.setItem('usuarioLogado', JSON.stringify(user))
+    return user
+  }
+
+  const modal    = document.getElementById('modal-auth')
+  const btnEntrar    = document.getElementById('btn-entrar')
+  const btnRegistrar = document.getElementById('btn-registrar')
 
   function openAuth(type) {
-    document.getElementById('modal-login-content').style.display = type === 'login' ? '' : 'none'
+    document.getElementById('modal-login-content').style.display    = type === 'login'    ? '' : 'none'
     document.getElementById('modal-register-content').style.display = type === 'register' ? '' : 'none'
     modal.classList.add('ativo')
   }
@@ -169,26 +148,32 @@
     document.getElementById('login-error').textContent = ''
   }
 
-  document.getElementById('btn-entrar').addEventListener('click', e => { e.preventDefault(); openAuth('login') })
-  document.getElementById('btn-registrar').addEventListener('click', e => { e.preventDefault(); openAuth('register') })
+  btnEntrar.addEventListener('click',    e => { e.preventDefault(); openAuth('login') })
+  btnRegistrar.addEventListener('click', e => { e.preventDefault(); openAuth('register') })
   modal.addEventListener('click', e => { if (e.target === modal) closeAuth() })
   document.getElementById('modal-auth-fechar').addEventListener('click', closeAuth)
 
-  document.getElementById('login-form').addEventListener('submit', async e => {
+  document.getElementById('login-form').addEventListener('submit', e => {
     e.preventDefault()
     const email = document.getElementById('login-email').value.trim()
     const senha = document.getElementById('login-senha').value.trim()
-    const { data: user } = await login(email, senha)
+    const user  = login(email, senha)
     if (!user) {
       document.getElementById('login-error').textContent = 'E-mail ou senha inválidos.'
       return
     }
-    window.location.href = user.tipo === 'cliente' ? '/pages/user.html' : '/pages/administrative.html'
+    const adminTipos = ['professor', 'educacional', 'empresarial']
+    window.location.href = adminTipos.includes(user.tipo)
+      ? '/font/pages/html.pages/administrative.html'
+      : '/font/pages/html.pages/user.html'
   })
+}())
 </script>
 
 <!-- React: catálogo de cursos -->
-<script type="module" src="/src/entries/landing.jsx"></script>
+<script type="module" src="/font/src/react.src/entries/landing.jsx"></script>
 </body>
 </html>
+
+
 
