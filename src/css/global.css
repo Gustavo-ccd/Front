@@ -103,6 +103,17 @@ body{
     border-color:var(--accent);
 }
 
+.modal-campo input:-webkit-autofill,
+.modal-campo input:-webkit-autofill:hover,
+.modal-campo input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px var(--surface2) inset;
+    -webkit-text-fill-color: var(--text);
+    box-shadow: 0 0 0px 1000px var(--surface2) inset;
+    transition: background-color 5000s ease-in-out 0s;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
 .modal-botao{
     width:100%;
     padding:12px;

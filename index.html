@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -7,9 +7,188 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/css/global.css" />
+  <link rel="stylesheet" href="/src/css/landing.css" />
+  <style>html,body{background:#0d1117;margin:0;padding:0}</style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+<div class="page">
+
+  <header class="topo">
+    <h1 class="logo">EducaInclui PASCAL</h1>
+    <nav class="menu-topo" id="nav-auth">
+      <a href="#" id="btn-entrar">Entrar</a>
+      <a href="#" id="btn-registrar">Registre-se</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO: estático -->
+    <section class="hero">
+      <div class="hero-texto">
+        <div class="hero-letter-row"><p class="hero-letter">P</p><p class="hero-desc">Plataforma completa para cursos online.</p></div>
+        <div class="hero-letter-row"><p class="hero-letter">A</p><p class="hero-desc">Aprendizado interativo com recursos modernos.</p></div>
+        <div class="hero-letter-row"><p class="hero-letter">S</p><p class="hero-desc">Suporte e comunidade para se desenvolver.</p></div>
+        <div class="hero-letter-row"><p class="hero-letter">C</p><p class="hero-desc">Conteúdo personalizável para cada perfil.</p></div>
+        <div class="hero-letter-row"><p class="hero-letter">A</p><p class="hero-desc">Acesso a qualquer hora em qualquer dispositivo.</p></div>
+        <div class="hero-letter-row"><p class="hero-letter">L</p><p class="hero-desc">Licença escalável para equipes e instituições.</p></div>
+      </div>
+      <img id="ft1" src="/assets/fotos/womanNotebook.jpg" alt="Pessoa estudando usando um notebook" />
+    </section>
+
+    <!-- PLANOS: estático -->
+    <section class="planos">
+      <article class="card-plano card-plano-disabled">
+        <div class="plano-badge-off">Não disponível</div>
+        <h3>Profissional</h3>
+        <p>Plano focado para profissionais que buscam vender seus cursos e treinamentos.</p>
+        <span class="plano-btn-off">Recurso não implementado para essa apresentação</span>
+      </article>
+      <article class="card-plano card-plano-disabled">
+        <div class="plano-badge-off">Não disponível</div>
+        <h3>Empresarial</h3>
+        <p>Plano focado para empresas que buscam ter um ambiente de treinamento e desenvolvimento para seus colaboradores.</p>
+        <span class="plano-btn-off">Recurso não implementado para essa apresentação</span>
+      </article>
+      <article class="card-plano card-plano-disabled">
+        <div class="plano-badge-off">Não disponível</div>
+        <h3>Educacional</h3>
+        <p>Plano focado para instituições de ensino que desejam melhorar seu ambiente de ensino e aprendizagem, oferecendo uma plataforma completa para seus alunos e professores.</p>
+        <span class="plano-btn-off">Recurso não implementado para essa apresentação</span>
+      </article>
+    </section>
+
+    <!-- CATÁLOGO DE CURSOS: React injeta aqui se houver cursos -->
+    <div id="courses-catalog"></div>
+
+    <!-- APRESENTAÇÃO: estático -->
+    <section class="apresentacao">
+      <div class="apresentacao-fotos">
+        <div class="apresentacao-foto"><img src="/assets/fotos/c1.jpg" alt="Curso 1" /></div>
+        <div class="apresentacao-foto apresentacao-foto-center"><img src="/assets/fotos/c2.jpg" alt="Curso 2" /></div>
+        <div class="apresentacao-foto"><img src="/assets/fotos/c3.jpg" alt="Curso 3" /></div>
+      </div>
+      <div class="apres-label">Projeto Acadêmico · Apresentação</div>
+      <h2>Site fictício com intuito educacional sobre o projeto EducaInclui Pascal, utilizado como base para apresentação das disciplinas AEP, FrontEnd, APOO e Mentalidade Criativa</h2>
+      <p>Em nossa plataforma, os usuários podem criar e compartilhar seus próprios cursos, além de acessar uma ampla variedade de conteúdos educacionais em diversas áreas do conhecimento. Com uma interface intuitiva e recursos interativos, nosso site oferece uma experiência de aprendizado envolvente e personalizada para cada usuário.</p>
+      <div class="apres-tech-grid">
+        <div class="apres-tech-card">
+          <span class="apres-tech-icon">{ }</span>
+          <h4>Linguagens</h4>
+          <div class="apres-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript ES2022+</span></div>
+        </div>
+        <div class="apres-tech-card">
+          <span class="apres-tech-icon">⬡</span>
+          <h4>APIs do Navegador</h4>
+          <div class="apres-tags"><span>localStorage</span><span>File API</span></div>
+        </div>
+        <div class="apres-tech-card">
+          <span class="apres-tech-icon">▣</span>
+          <h4>Estrutura de Dados</h4>
+          <div class="apres-tags"><span>Fila (Queue — FIFO)</span></div>
+          <p class="apres-tech-desc">Usada para controlar a ordem de liberação das perguntas conforme o vídeo avança.</p>
+        </div>
+        <div class="apres-tech-card">
+          <span class="apres-tech-icon">◈</span>
+          <h4>Arquitetura</h4>
+          <div class="apres-tags"><span>MPA + React</span><span>Express + Node.js</span><span>JSON + File System</span></div>
+          <p class="apres-tech-desc">5 páginas HTML estáticas com React para injeção dinâmica de cursos. Backend Express para upload e persistência em arquivo.</p>
+        </div>
+        <div class="apres-tech-card">
+          <span class="apres-tech-icon">◻</span>
+          <h4>Layout &amp; Estilo</h4>
+          <div class="apres-tags"><span>CSS Grid</span><span>CSS Flexbox</span><span>CSS Custom Properties</span><span>Responsivo</span></div>
+        </div>
+        <div class="apres-tech-card apres-tech-card-highlight">
+          <span class="apres-tech-icon">✦</span>
+          <h4>Disciplinas Relacionadas</h4>
+          <div class="apres-tags"><span>AEP</span><span>FrontEnd</span><span>APOO</span><span>Mentalidade Criativa</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- MODAL: Login / Cadastro -->
+<div class="modal" id="modal-auth">
+  <div class="modal-conteudo">
+    <button class="modal-fechar" id="modal-auth-fechar">X</button>
+
+    <div id="modal-login-content">
+      <h2 id="modalTitulo">Entrar</h2>
+      <div id="modalCorpo">
+        <div style="background:#21262d;border:1px solid #30363d;padding:15px;border-radius:10px;margin-bottom:20px;color:#e6edf3">
+          <h4 style="color:#00c8a0;margin-bottom:10px">Usuários para teste</h4>
+          <p>Cliente:</p>
+          <small>cliente@pascal.com | 123</small>
+          <br><br>
+          <p>Educacional:</p>
+          <small>educacional@pascal.com | 123</small>
+        </div>
+        <form id="login-form">
+          <div class="modal-campo">
+            <label>E-mail</label>
+            <input type="email" id="login-email" placeholder="Digite seu e-mail" />
+          </div>
+          <div class="modal-campo">
+            <label>Senha</label>
+            <input type="password" id="login-senha" placeholder="Digite sua senha" />
+          </div>
+          <p id="login-error" style="color:#e06c6c;margin-bottom:12px;font-size:.9rem;min-height:1rem"></p>
+          <button class="modal-botao" type="submit">Entrar</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="modal-register-content" style="display:none">
+      <h2>Cadastro Desativado</h2>
+      <div>
+        <p>Esta versão utiliza apenas usuários de demonstração.</p>
+        <br>
+        <p>Utilize um dos acessos disponíveis na tela de login.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { login } from '/src/api/auth.js'
+
+  const modal = document.getElementById('modal-auth')
+
+  function openAuth(type) {
+    document.getElementById('modal-login-content').style.display = type === 'login' ? '' : 'none'
+    document.getElementById('modal-register-content').style.display = type === 'register' ? '' : 'none'
+    modal.classList.add('ativo')
+  }
+
+  function closeAuth() {
+    modal.classList.remove('ativo')
+    document.getElementById('login-error').textContent = ''
+  }
+
+  document.getElementById('btn-entrar').addEventListener('click', e => { e.preventDefault(); openAuth('login') })
+  document.getElementById('btn-registrar').addEventListener('click', e => { e.preventDefault(); openAuth('register') })
+  modal.addEventListener('click', e => { if (e.target === modal) closeAuth() })
+  document.getElementById('modal-auth-fechar').addEventListener('click', closeAuth)
+
+  document.getElementById('login-form').addEventListener('submit', async e => {
+    e.preventDefault()
+    const email = document.getElementById('login-email').value.trim()
+    const senha = document.getElementById('login-senha').value.trim()
+    const { data: user } = await login(email, senha)
+    if (!user) {
+      document.getElementById('login-error').textContent = 'E-mail ou senha inválidos.'
+      return
+    }
+    window.location.href = user.tipo === 'cliente' ? '/pages/user.html' : '/pages/administrative.html'
+  })
+</script>
+
+<!-- React: catálogo de cursos -->
+<script type="module" src="/src/entries/landing.jsx"></script>
 </body>
 </html>
+

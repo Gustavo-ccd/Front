@@ -298,6 +298,12 @@
     border-color:transparent;
 }
 
+#user-app{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
 .course-main{
     display:grid;
     grid-template-columns:1fr;

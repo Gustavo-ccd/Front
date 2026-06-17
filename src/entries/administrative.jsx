@@ -1,0 +1,53 @@
+import { useState, useEffect } from 'react'
+import { createRoot } from 'react-dom/client'
+import { getAll } from '../api/courses'
+
+function AdminApp() {
+  const [courses, setCourses] = useState([])
+
+  useEffect(() => {
+    getAll().then(({ data }) => setCourses(data || []))
+  }, [])
+
+  const totalLessons = courses.reduce((acc, c) => acc + c.lessonCount, 0)
+
+  return (
+    <>
+      <section className="dashboard-summary">
+        <div className="dashboard-card">
+          <span className="card-label">Total de cursos</span>
+          <strong>{courses.length}</strong>
+        </div>
+        <div className="dashboard-card">
+          <span className="card-label">Total de aulas</span>
+          <strong>{totalLessons}</strong>
+        </div>
+      </section>
+
+      <section className="top-courses">
+        <div className="top-courses-header">
+          <h2>Cursos cadastrados</h2>
+          <a href="/pages/course.html" className="dash-link">Gerenciar cursos</a>
+        </div>
+        <div className="top-courses-list">
+          {courses.length === 0 ? (
+            <p className="dash-empty">
+              Nenhum curso cadastrado ainda.{' '}
+              <a href="/pages/course.html">Adicionar curso</a>
+            </p>
+          ) : (
+            courses.map((c, i) => (
+              <div className="top-course-item" key={c.id}>
+                <span>{i + 1}. {c.name}</span>
+                <span>{c.topic}</span>
+                <span>{c.lessonCount} aula{c.lessonCount !== 1 ? 's' : ''}</span>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+    </>
+  )
+}
+
+createRoot(document.getElementById('admin-app')).render(<AdminApp />)
