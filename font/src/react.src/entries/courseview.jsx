@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { createRoot } from 'react-dom/client'
 import { getAll } from '../../js.src/api/courses'
 import { getNote, saveNote } from '../../js.src/api/notes'
@@ -7,7 +7,6 @@ import { getVideo } from '../../js.src/lib/videoDB'
 import Queue from '../../js.src/lib/queue'
 import Question from '../../js.src/models/question'
 
-// ── Painel de Gabarito ────────────────────────────────────────────────────────
 function GabaritoPanel({ lesson, displayedCount }) {
   const [revealed, setRevealed] = useState({})
   useEffect(() => { setRevealed({}) }, [lesson])
@@ -56,7 +55,6 @@ function GabaritoPanel({ lesson, displayedCount }) {
   )
 }
 
-// ── Overlay de Questão ────────────────────────────────────────────────────────
 function QuestionOverlay({ q, num, onClose }) {
   const [selectedOption, setSelectedOption] = useState(-1)
   const [answered, setAnswered] = useState(false)
@@ -137,7 +135,6 @@ function QuestionOverlay({ q, num, onClose }) {
   )
 }
 
-// ── App principal: player de curso ────────────────────────────────────────────
 function CourseViewApp() {
   const params = new URLSearchParams(window.location.search)
   const courseId = Number(params.get('courseId'))
@@ -324,7 +321,6 @@ function CourseViewApp() {
   return (
     <>
       <div className="cv-layout">
-        {/* Sidebar: lista de aulas */}
         <aside className="cv-sidebar">
           <div className="cv-sidebar-top">
             <a href="/font/pages/html.pages/user.html" className="cv-back">← Voltar</a>
@@ -352,7 +348,6 @@ function CourseViewApp() {
           </ul>
         </aside>
 
-        {/* Centro: player de vídeo */}
         <main className="cv-main">
           <div className="cv-video-header">
             <h3>{lesson ? lesson.name : 'Selecione uma aula'}</h3>
@@ -383,7 +378,6 @@ function CourseViewApp() {
           {lesson && <p className="cv-lesson-desc">{lesson.desc}</p>}
         </main>
 
-        {/* Direita: tabs Perguntas / Anotações / Gabarito */}
         <aside className="cv-right">
           <div className="cv-tabs">
             {[
@@ -446,6 +440,3 @@ function CourseViewApp() {
 }
 
 createRoot(document.getElementById('courseview-root')).render(<CourseViewApp />)
-
-
-

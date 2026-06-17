@@ -1,4 +1,4 @@
-﻿import { getAll, create, remove, addLesson, updateLesson, removeLesson } from '/font/src/js.src/api/courses.js'
+import { getAll, create, remove, addLesson, updateLesson, removeLesson } from '/font/src/js.src/api/courses.js'
 
 let currentCourseId = null
 let currentLessonId = null
@@ -19,7 +19,6 @@ document.querySelectorAll('.modal-close').forEach(btn => {
   btn.addEventListener('click', () => btn.closest('.modal').classList.remove('modal-active'))
 })
 
-// ── Adicionar Curso ──────────────────────────────────────────────────────
 window.openAddCourseModal = function () {
   $('add-course-form').reset()
   $('add-course-preview-wrap').style.display = 'none'
@@ -50,13 +49,11 @@ $('add-course-form').addEventListener('submit', async e => {
   window.__refreshCourseList?.()
 })
 
-// ── Deletar Curso ────────────────────────────────────────────────────────
 window.deleteCourse = async function (courseId) {
   await remove(courseId)
   window.__refreshCourseList?.()
 }
 
-// ── Gerenciar Curso ──────────────────────────────────────────────────────
 window.openManageCourseModal = async function (courseId) {
   currentCourseId = courseId
   const { data: courses } = await getAll()
@@ -98,7 +95,6 @@ window.doDeleteLesson = async function (lessonId) {
 
 $('manage-add-lesson-btn').addEventListener('click', () => openLessonModal(null))
 
-// ── Aula Modal ───────────────────────────────────────────────────────────
 window.openLessonModal = async function (lessonId) {
   currentLessonId = lessonId
   questions = []
@@ -276,4 +272,3 @@ $('lesson-form').addEventListener('submit', async e => {
   if (updated) renderLessonsList(updated.lessons)
   window.__refreshCourseList?.()
 })
-

@@ -24,7 +24,7 @@
 
   <main>
 
-    <!-- HERO: estático -->
+    
     <section class="hero">
       <div class="hero-texto">
         <div class="hero-letter-row"><p class="hero-letter">P</p><p class="hero-desc">Plataforma completa para cursos online.</p></div>
@@ -37,32 +37,29 @@
       <img id="ft1" src="/font/pages/assets.pages/fotos/womanNotebook.jpg" alt="Pessoa estudando usando um notebook" />
     </section>
 
-    <!-- PLANOS: estático -->
+    
     <section class="planos">
-      <article class="card-plano card-plano-disabled">
-        <div class="plano-badge-off">Não disponível</div>
+      <article class="card-plano">
         <h3>Profissional</h3>
         <p>Plano focado para profissionais que buscam vender seus cursos e treinamentos.</p>
-        <span class="plano-btn-off">Recurso não implementado para essa apresentação</span>
+        <a href="#" class="plano-btn" onclick="event.preventDefault();document.getElementById('btn-registrar').click()">Registre-se</a>
       </article>
-      <article class="card-plano card-plano-disabled">
-        <div class="plano-badge-off">Não disponível</div>
+      <article class="card-plano">
         <h3>Empresarial</h3>
         <p>Plano focado para empresas que buscam ter um ambiente de treinamento e desenvolvimento para seus colaboradores.</p>
-        <span class="plano-btn-off">Recurso não implementado para essa apresentação</span>
+        <a href="https://wa.me/5544997387925" target="_blank" rel="noopener noreferrer" class="plano-btn">Entrar em contato</a>
       </article>
-      <article class="card-plano card-plano-disabled">
-        <div class="plano-badge-off">Não disponível</div>
+      <article class="card-plano">
         <h3>Educacional</h3>
         <p>Plano focado para instituições de ensino que desejam melhorar seu ambiente de ensino e aprendizagem, oferecendo uma plataforma completa para seus alunos e professores.</p>
-        <span class="plano-btn-off">Recurso não implementado para essa apresentação</span>
+        <a href="https://wa.me/5544997387925" target="_blank" rel="noopener noreferrer" class="plano-btn">Entrar em contato</a>
       </article>
     </section>
 
-    <!-- CATÁLOGO DE CURSOS: React injeta aqui se houver cursos -->
+    
     <div id="courses-catalog"></div>
 
-    <!-- APRESENTAÇÃO: estático -->
+    
     <section class="apresentacao">
       <div class="apresentacao-fotos">
         <div class="apresentacao-foto"><img src="/font/pages/assets.pages/fotos/c1.jpg" alt="Curso 1" /></div>
@@ -71,13 +68,13 @@
       </div>
       <div class="apres-label">Projeto Acadêmico · Apresentação</div>
       <h2>Site fictício com intuito educacional sobre o projeto EducaInclui Pascal, utilizado como base para apresentação das disciplinas AEP, FrontEnd, APOO e Mentalidade Criativa</h2>
-      <p>Em nossa plataforma, os usuários podem criar e compartilhar seus próprios cursos, além de acessar uma ampla variedade de conteúdos educacionais em diversas áreas do conhecimento. Com uma interface intuitiva e recursos interativos, nosso site oferece uma experiência de aprendizado envolvente e personalizada para cada usuário.</p>
+      <p>Esse é um protótipo semi-funcional, com ele você consegue adicionar cursos e perguntas e assistir esses mesmo curso, ainda não está disponivel a interação entre diferente usuários! </p>
     </section>
 
   </main>
 </div>
 
-<!-- MODAL: Login / Cadastro -->
+
 <div class="modal" id="modal-auth">
   <div class="modal-conteudo">
     <button class="modal-fechar" id="modal-auth-fechar">X</button>
@@ -170,7 +167,6 @@
 }())
 </script>
 
-<!-- React: catálogo de cursos -->
 <script type="module" src="/font/src/react.src/entries/landing.jsx"></script>
 </body>
 </html>

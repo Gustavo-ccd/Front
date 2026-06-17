@@ -1,5 +1,3 @@
-/* ── Layout ────────────────────────────────────────────────────────── */
-
 .admin-dashboard{
     display:flex;
     gap:32px;
@@ -153,8 +151,6 @@
     line-height:1.8;
 }
 
-/* ── Dashboard ─────────────────────────────────────────────────────── */
-
 .dashboard-summary{
     display:grid;
     grid-template-columns:repeat(3,minmax(0,1fr));
@@ -234,8 +230,6 @@
 }
 
 .dash-empty a{ color:var(--accent); }
-
-/* ── Responsivo ────────────────────────────────────────────────────── */
 
 @media (max-width:1080px){
     .dashboard-summary{ grid-template-columns:1fr; }
