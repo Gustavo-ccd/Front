@@ -4,12 +4,57 @@ let currentCourseId = null
 let currentLessonId = null
 let questions = []
 let qCounter = 0
+let resizedPhotoDataUrl = null
 
 function $(id) { return document.getElementById(id) }
 function openModal(id) { $(id).classList.add('modal-active') }
 function closeModal(id) { $(id).classList.remove('modal-active') }
 function escHtml(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
+function confirmDialog(message) {
+  return new Promise(resolve => {
+    $('confirm-msg').textContent = message
+    $('confirm-modal').classList.add('modal-active')
+
+    function onOk() {
+      $('confirm-modal').classList.remove('modal-active')
+      $('confirm-ok').removeEventListener('click', onOk)
+      $('confirm-cancel').removeEventListener('click', onCancel)
+      resolve(true)
+    }
+    function onCancel() {
+      $('confirm-modal').classList.remove('modal-active')
+      $('confirm-ok').removeEventListener('click', onOk)
+      $('confirm-cancel').removeEventListener('click', onCancel)
+      resolve(false)
+    }
+
+    $('confirm-ok').addEventListener('click', onOk)
+    $('confirm-cancel').addEventListener('click', onCancel)
+  })
+}
+
+function resizeImage(file, maxW = 800, maxH = 600, quality = 0.85) {
+  return new Promise(resolve => {
+    const reader = new FileReader()
+    reader.onload = e => {
+      const img = new Image()
+      img.onload = () => {
+        let w = img.width, h = img.height
+        const ratio = Math.min(maxW / w, maxH / h)
+        if (ratio < 1) { w = Math.round(w * ratio); h = Math.round(h * ratio) }
+        const canvas = document.createElement('canvas')
+        canvas.width = w
+        canvas.height = h
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h)
+        resolve(canvas.toDataURL('image/jpeg', quality))
+      }
+      img.src = e.target.result
+    }
+    reader.readAsDataURL(file)
+  })
 }
 
 document.querySelectorAll('.modal').forEach(m => {
@@ -21,21 +66,25 @@ document.querySelectorAll('.modal-close').forEach(btn => {
 
 window.openAddCourseModal = function () {
   $('add-course-form').reset()
-  $('add-course-preview-wrap').style.display = 'none'
-  $('add-course-filename').textContent = 'Nenhum arquivo escolhido'
+  $('add-course-preview').style.display = 'none'
+  $('add-course-preview').src = ''
+  $('add-photo-placeholder').style.display = 'flex'
+  resizedPhotoDataUrl = null
   openModal('add-course-modal')
 }
 
-$('add-course-image-btn').addEventListener('click', () => $('add-course-image').click())
-$('add-course-image').addEventListener('change', e => {
+$('add-course-photo-area').addEventListener('click', () => $('add-course-image').click())
+$('add-course-image').addEventListener('change', async e => {
   const file = e.target.files[0]
   if (file) {
-    $('add-course-preview').src = URL.createObjectURL(file)
-    $('add-course-preview-wrap').style.display = 'flex'
-    $('add-course-filename').textContent = file.name
+    resizedPhotoDataUrl = await resizeImage(file)
+    $('add-course-preview').src = resizedPhotoDataUrl
+    $('add-course-preview').style.display = 'block'
+    $('add-photo-placeholder').style.display = 'none'
   } else {
-    $('add-course-preview-wrap').style.display = 'none'
-    $('add-course-filename').textContent = 'Nenhum arquivo escolhido'
+    resizedPhotoDataUrl = null
+    $('add-course-preview').style.display = 'none'
+    $('add-photo-placeholder').style.display = 'flex'
   }
 })
 
@@ -44,12 +93,14 @@ $('add-course-form').addEventListener('submit', async e => {
   const name = $('add-course-name').value.trim()
   const topic = $('add-course-topic').value.trim()
   if (!name || !topic) return
-  await create(name, topic, $('add-course-image').files[0] || null)
+  await create(name, topic, resizedPhotoDataUrl)
+  resizedPhotoDataUrl = null
   closeModal('add-course-modal')
   window.__refreshCourseList?.()
 })
 
 window.deleteCourse = async function (courseId) {
+  if (!await confirmDialog('Tem certeza que deseja deletar este curso?\nEsta ação não pode ser desfeita.')) return
   await remove(courseId)
   window.__refreshCourseList?.()
 }
@@ -72,12 +123,10 @@ function renderLessonsList(lessons) {
   }
   list.innerHTML = lessons.map((l, i) => `
     <div class="lesson-item">
+      <span class="lesson-number">${i + 1}</span>
       <div class="lesson-item-info">
-        <span class="lesson-number">${i + 1}.</span>
-        <div>
-          <span>${escHtml(l.name)}</span>
-          ${l.hasVideo ? `<span class="lesson-video-badge">${escHtml(l.videoName)}</span>` : ''}
-        </div>
+        <span class="lesson-name">${escHtml(l.name)}</span>
+        ${l.hasVideo ? `<span class="lesson-video-badge">🎬 ${escHtml(l.videoName)}</span>` : ''}
       </div>
       <div class="lesson-item-actions">
         <button class="secondary-button" onclick="openLessonModal(${Number(l.id)})">Editar</button>
@@ -88,6 +137,7 @@ function renderLessonsList(lessons) {
 }
 
 window.doDeleteLesson = async function (lessonId) {
+  if (!await confirmDialog('Tem certeza que deseja remover esta aula?')) return
   const { data: updated } = await removeLesson(currentCourseId, lessonId)
   if (updated) renderLessonsList(updated.lessons)
   window.__refreshCourseList?.()

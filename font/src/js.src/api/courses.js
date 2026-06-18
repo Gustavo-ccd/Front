@@ -40,7 +40,9 @@ export async function create(name, topic, photoFile = null) {
   try {
     const data = load()
     let photoUrl = ''
-    if (photoFile) photoUrl = await fileToBase64(photoFile)
+    if (photoFile) {
+      photoUrl = typeof photoFile === 'string' ? photoFile : await fileToBase64(photoFile)
+    }
     const course = { id: data.nextId++, name, topic, photoUrl, lessons: [] }
     data.courses.push(course)
     persist(data)

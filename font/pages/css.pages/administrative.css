@@ -257,11 +257,11 @@
     .profile-info{ display:flex; flex-direction:column; justify-content:center; gap:1px; }
     .sidebar-profile strong{ margin:0; line-height:1.2; }
     .sidebar-profile span{ margin:0; line-height:1.2; }
-    .sidebar-body{ display:flex; flex-direction:column; align-items:stretch; flex:1; gap:14px; min-height:auto; }
-    .sidebar-nav{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; }
-    .sidebar-nav a, .sidebar-bottom a{ justify-content:center; padding:12px 14px; text-align:center; }
+    .sidebar-body{ display:flex; flex-direction:row; align-items:center; gap:8px; flex:none; min-height:auto; }
+    .sidebar-nav{ display:flex; flex-direction:row; gap:8px; }
+    .sidebar-nav a, .sidebar-bottom a{ justify-content:center; padding:10px 16px; text-align:center; white-space:nowrap; }
     .nav-icon{ display:none; }
-    .sidebar-bottom{ margin-top:0; }
+    .sidebar-bottom{ margin-top:0; margin-left:auto; }
     .dashboard-summary{ grid-template-columns:repeat(2,minmax(0,1fr)); }
     .top-course-item{ grid-template-columns:1fr; gap:10px; align-items:flex-start; }
     .top-courses-header{ align-items:flex-start; flex-direction:column; }
@@ -271,8 +271,6 @@
 @media(max-width:640px){
     .admin-dashboard{ padding:12px; gap:14px; }
     .sidebar{ padding:16px; border-radius:16px; }
-    .sidebar-profile{ flex-direction:column; align-items:flex-start; gap:14px; }
-    .avatar-column{ align-items:flex-start; }
     .dashboard-summary{ grid-template-columns:1fr; }
     .dashboard-card{ padding:20px; border-radius:18px; }
     .dashboard-card strong{ font-size:1.6rem; }
@@ -286,9 +284,8 @@
     .sidebar,
     .dashboard-card,
     .courses-section-container{ border-radius:14px; }
-    .sidebar-nav{ grid-template-columns:1fr; }
-    .sidebar-bottom a,
-    .sidebar-nav a{ width:100%; }
+    .sidebar-nav a,
+    .sidebar-bottom a{ padding:8px 10px; font-size:.85rem; }
     .sidebar-profile strong{ font-size:.96rem; }
     .profile-role,
     .profile-plan{ font-size:.88rem; }

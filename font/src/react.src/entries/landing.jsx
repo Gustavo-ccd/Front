@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { getAll } from '../../js.src/api/courses'
 
@@ -17,19 +17,14 @@ function CourseCatalog() {
         <h2>Cursos disponíveis</h2>
         <p>Explore o catálogo de cursos da plataforma.</p>
       </div>
-      <div className="cursos-grid">
+      <div className="dash-courses-grid">
         {courses.map(c => (
-          <div className="curso-card-landing" key={c.id}>
-            {c.photoUrl ? (
-              <img src={c.photoUrl} alt={c.name} className="curso-card-img-landing" />
-            ) : (
-              <div className="curso-card-placeholder-landing">
-                <span>{c.topicInitial}</span>
-              </div>
-            )}
-            <h3>{c.name}</h3>
-            <p>{c.topic}</p>
-            <span className="curso-card-meta">{c.lessonCount} aula{c.lessonCount !== 1 ? 's' : ''}</span>
+          <div className="dash-course-card" key={c.id}>
+            {c.photoUrl
+              ? <img src={c.photoUrl} alt={c.name} />
+              : <div className="dash-course-placeholder">{c.topicInitial}</div>
+            }
+            <div className="dash-course-name">{c.name}</div>
           </div>
         ))}
       </div>
@@ -39,4 +34,3 @@ function CourseCatalog() {
 
 const catalogEl = document.getElementById('courses-catalog')
 if (catalogEl) createRoot(catalogEl).render(<CourseCatalog />)
-

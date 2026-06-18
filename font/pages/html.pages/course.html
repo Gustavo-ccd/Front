@@ -62,8 +62,16 @@
 <div class="modal" id="add-course-modal">
   <div class="modal-content">
     <button class="modal-close" type="button">&times;</button>
-    <h2>Adicionar novo curso</h2>
+    <h2>Novo curso</h2>
     <form class="course-form" id="add-course-form" novalidate>
+      <div class="add-photo-area" id="add-course-photo-area">
+        <input type="file" id="add-course-image" accept="image/*" style="display:none" />
+        <img id="add-course-preview" src="" alt="Preview" style="display:none;width:100%;height:100%;object-fit:cover" />
+        <div class="add-photo-placeholder" id="add-photo-placeholder">
+          <span class="add-photo-icon">📷</span>
+          <span>Toque para adicionar foto</span>
+        </div>
+      </div>
       <label>
         Nome do curso
         <input type="text" id="add-course-name" placeholder="Digite o nome do curso" />
@@ -72,17 +80,6 @@
         Tópico
         <input type="text" id="add-course-topic" placeholder="Ex: Web, Design, Marketing" />
       </label>
-      <div class="file-input-field">
-        <span class="file-input-label">Foto do curso (opcional)</span>
-        <div class="file-input-wrap">
-          <input type="file" id="add-course-image" accept="image/*" style="display:none" />
-          <button type="button" id="add-course-image-btn" class="file-btn">Escolher arquivo</button>
-          <span class="file-name-display" id="add-course-filename">Nenhum arquivo escolhido</span>
-        </div>
-      </div>
-      <div class="course-image-preview" id="add-course-preview-wrap" style="display:none">
-        <img id="add-course-preview" src="" alt="Preview" />
-      </div>
       <div class="form-actions">
         <button class="primary-button" type="submit">Adicionar curso</button>
       </div>
@@ -139,6 +136,16 @@
         <button class="primary-button" type="submit">Salvar aula</button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="modal" id="confirm-modal">
+  <div class="modal-content confirm-modal-content">
+    <p class="confirm-msg" id="confirm-msg"></p>
+    <div class="confirm-actions">
+      <button class="secondary-button" type="button" id="confirm-cancel">Cancelar</button>
+      <button class="remove-button confirm-ok-btn" type="button" id="confirm-ok">Confirmar</button>
+    </div>
   </div>
 </div>
 

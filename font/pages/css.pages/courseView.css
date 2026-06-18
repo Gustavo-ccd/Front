@@ -816,14 +816,6 @@
     font-style:italic;
 }
 
-@media(max-width:900px){  body{ zoom:0.98; } }
-@media(max-width:700px){  body{ zoom:0.88; } }
-@media(max-width:600px){  body{ zoom:0.82; } }
-@media(max-width:500px){  body{ zoom:0.75; } }
-@media(max-width:450px){  body{ zoom:0.68; } }
-@media(max-width:410px){  body{ zoom:0.62; } }
-@media(max-width:390px){  body{ zoom:0.55; } }
-
 @media(max-width:900px){
     .cv-layout{ min-height:auto; grid-template-columns:1fr; }
 
@@ -867,6 +859,36 @@
     .cv-lesson-num{ margin-top:0; }
     .cv-lesson-name{ font-size:.68rem; color:var(--muted); line-height:1.3; max-width:60px; }
 
-    .cv-right{ height:auto; position:relative; border-left:none; border-top:1px solid var(--border); }
+    .cv-right{
+        height:auto;
+        position:relative;
+        border-left:none;
+        border-top:1px solid var(--border);
+        overflow:visible;
+    }
+
+    .cv-tab-panel{
+        min-height:320px;
+        overflow:visible;
+    }
+
+    .cv-questions-list{
+        flex:none;
+        min-height:260px;
+        overflow-y:auto;
+        max-height:420px;
+    }
+
+    .cv-gabarito-list{
+        flex:none;
+        min-height:260px;
+        overflow-y:auto;
+        max-height:420px;
+    }
+
+    .cv-notepad{
+        flex:none;
+        min-height:260px;
+    }
 }
 

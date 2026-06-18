@@ -25,6 +25,7 @@
     border:1px solid var(--border);
     border-radius:8px;
     transition:.3s;
+    white-space:nowrap;
 }
 
 .menu-topo a:hover{
@@ -184,11 +185,11 @@
 }
 
 .cursos-catalogo{
-    padding:0 8% 60px;
+    padding:0 8% 32px;
 }
 
 .cursos-catalogo-header{
-    margin-bottom:28px;
+    margin-bottom:20px;
 }
 
 .cursos-catalogo-header h2{
@@ -198,65 +199,6 @@
 
 .cursos-catalogo-header p{
     color:var(--muted);
-}
-
-.cursos-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-    gap:20px;
-}
-
-.curso-card-landing{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:22px;
-    transition:.3s;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.curso-card-landing:hover{
-    border-color:var(--accent);
-    transform:translateY(-3px);
-}
-
-.curso-card-placeholder-landing{
-    height:100px;
-    border-radius:14px;
-    background:var(--surface2);
-    border:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:2.4rem;
-    font-weight:700;
-    color:var(--accent);
-    margin-bottom:6px;
-}
-
-.curso-card-img-landing{
-    width:100%;
-    height:100px;
-    object-fit:cover;
-    border-radius:14px;
-    border:1px solid var(--border);
-    display:block;
-    margin-bottom:6px;
-}
-
-.curso-card-landing h3{
-    color:var(--accent);
-    font-size:1rem;
-    margin:0;
-}
-
-.curso-card-landing p{
-    color:var(--muted);
-    font-size:.9rem;
-    margin:0;
-    line-height:1.5;
 }
 
 @media(max-width:900px){
@@ -359,8 +301,17 @@
         padding-bottom:48px;
     }
 
-    .cursos-grid{
-        grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    .apresentacao{
+        padding:48px 6%;
+    }
+
+    .apresentacao-fotos{
+        grid-template-columns:1fr 1fr;
+        gap:14px;
+    }
+
+    .apresentacao h2{
+        font-size:1.55rem;
     }
 }
 
@@ -374,28 +325,20 @@
     }
 
     .logo{
-        font-size:1.6rem;
+        font-size:1.5rem;
     }
 
     .menu-topo{
-        flex-direction:column;
+        gap:8px;
     }
 
     .menu-topo a{
-        width:100%;
-        text-align:center;
+        padding:8px 12px;
+        font-size:.88rem;
     }
 
     .hero{
         padding-top:28px;
-    }
-
-    .hero-letter-row{
-        grid-template-columns:1fr;
-    }
-
-    .hero-letter{
-        margin-bottom:2px;
     }
 
     .hero-desc{
@@ -423,8 +366,18 @@
         font-size:1.45rem;
     }
 
-    .cursos-grid{
+    .apresentacao{
+        padding:40px 4%;
+    }
+
+    .apresentacao-fotos{
         grid-template-columns:1fr;
+        gap:12px;
+    }
+
+    .apresentacao h2{
+        font-size:1.35rem;
+        line-height:1.5;
     }
 }
 
@@ -437,57 +390,70 @@
         padding-right:12px;
     }
 
-    .menu-topo a,
-    .card-plano a{
-        width:100%;
+    .topo{
+        margin:0 6px 6px;
+        padding:12px 14px;
     }
 
-    .menu-topo a,
-    .card-plano a{
-        min-height:44px;
+    .logo{
+        font-size:1.25rem;
     }
+
+    .menu-topo a{
+        padding:7px 10px;
+        font-size:.82rem;
+        min-height:40px;
+        display:inline-flex;
+        align-items:center;
+    }
+
+    .card-plano a{
+        width:100%;
+        min-height:44px;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+    }
+
     .card-plano{
         padding:18px 16px;
     }
+
     .card-plano h3{
-        font-size:1.05rem;
+        font-size:1rem;
     }
+
     .card-plano p{
-        font-size:.92rem;
+        font-size:.9rem;
         line-height:1.65;
     }
+
     .cursos-catalogo-header h2{
-        font-size:1.28rem;
+        font-size:1.2rem;
     }
-    .curso-card-landing{
-        padding:18px 16px;
-        border-radius:16px;
-    }
-    .curso-card-placeholder-landing,
-    .curso-card-img-landing{
-        height:92px;
-        border-radius:12px;
-    }
+
     .hero-letter{
         width:42px;
         min-height:42px;
         font-size:1.4rem;
     }
-}
 
-.curso-card-meta{
-    font-size:.82rem;
-    color:var(--muted);
-    background:var(--surface2);
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:4px 10px;
-    display:inline-block;
-    width:fit-content;
+    .apresentacao{
+        padding:32px 12px;
+    }
+
+    .apresentacao h2{
+        font-size:1.15rem;
+        line-height:1.5;
+    }
+
+    .apresentacao p{
+        font-size:.9rem;
+    }
 }
 
 .apresentacao{
-    padding:60px 8%;
+    padding:40px 8%;
     text-align:center;
 }
 
@@ -549,34 +515,3 @@
     margin-bottom:20px;
 }
 
-body{ overflow-x:auto; }
-
-@media(max-width:600px){
-    .planos{
-        padding:0 3% 40px;
-        gap:10px;
-    }
-    .card-plano{
-        min-height:auto;
-        padding:14px 10px;
-    }
-    .card-plano h3{
-        font-size:.85rem;
-        margin-bottom:8px;
-    }
-    .card-plano p{
-        font-size:.75rem;
-        line-height:1.5;
-        text-align:left;
-        margin-bottom:14px;
-    }
-    .card-plano a{
-        font-size:.75rem;
-        padding:8px 10px;
-        text-align:center;
-    }
-
-    body{
-        overflow-x:hidden;
-    }
-}
