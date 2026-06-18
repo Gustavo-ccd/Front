@@ -30,18 +30,20 @@ function AdminApp() {
             <h2>Cursos cadastrados</h2>
             <a href="/font/pages/html.pages/course.html" className="dash-link">Gerenciar cursos</a>
           </div>
-          <div className="top-courses-list">
+          <div className="dash-courses-grid">
             {courses.length === 0 ? (
               <p className="dash-empty">
                 Nenhum curso cadastrado ainda.{' '}
                 <a href="/font/pages/html.pages/course.html">Adicionar curso</a>
               </p>
             ) : (
-              courses.map((c, i) => (
-                <div className="top-course-item" key={c.id}>
-                  <span>{i + 1}. {c.name}</span>
-                  <span>{c.topic}</span>
-                  <span>{c.lessonCount} aula{c.lessonCount !== 1 ? 's' : ''}</span>
+              courses.map(c => (
+                <div className="dash-course-card" key={c.id}>
+                  {c.photoUrl
+                    ? <img src={c.photoUrl} alt={c.name} />
+                    : <div className="dash-course-placeholder">{c.topicInitial}</div>
+                  }
+                  <div className="dash-course-name">{c.name}</div>
                 </div>
               ))
             )}

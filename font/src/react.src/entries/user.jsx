@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { getAll } from '../../js.src/api/courses'
 
@@ -15,9 +15,10 @@ function UserApp() {
 
   const filtered = courses.filter(c => {
     const matchesTopic = activeFilter === 'all' || c.topic.toLowerCase() === activeFilter.toLowerCase()
-    const matchesSearch = !searchQuery ||
-      c.name.toLowerCase().includes(searchQuery) ||
-      c.topic.toLowerCase().includes(searchQuery)
+    const q = searchQuery.trim()
+    const matchesSearch = !q ||
+      c.name.toLowerCase().includes(q) ||
+      c.topic.toLowerCase().includes(q)
     return matchesTopic && matchesSearch
   })
 
@@ -25,8 +26,8 @@ function UserApp() {
     <>
       <section className="search-panel">
         <div className="search-header">
-          <h1>Buscar cursos para sua próxima jornada</h1>
-          <p>Explore aulas, trilhas e temas mais procurados na plataforma. Use os filtros abaixo para encontrar rapidamente o que você precisa.</p>
+          <h1>Buscar cursos</h1>
+          <p>Explore aulas e temas disponíveis na plataforma.</p>
         </div>
         <div className="search-box">
           <div className="search-field">
@@ -34,7 +35,7 @@ function UserApp() {
               type="search"
               placeholder="Pesquisar cursos, habilidades ou tópicos"
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value.toLowerCase().trim())}
+              onChange={e => setSearchQuery(e.target.value.toLowerCase())}
             />
             <button className="search-button" aria-label="Pesquisar">
               <span className="search-icon"></span>
@@ -61,25 +62,22 @@ function UserApp() {
             </div>
           ) : (
             filtered.map(c => (
-              <article className="course-card" key={c.id}>
-                {c.photoUrl ? (
-                  <img
-                    src={c.photoUrl}
-                    alt={c.name}
-                    style={{ width: '100%', height: '144px', objectFit: 'cover', borderRadius: '18px', marginBottom: '20px', border: '1px solid var(--border)', display: 'block' }}
-                  />
-                ) : (
-                  <div className="course-card-placeholder">
-                    <span>{c.topicInitial}</span>
+              <article className="user-course-card" key={c.id}>
+                <a href={`/font/pages/html.pages/courseView.html?courseId=${c.id}`} className="user-course-link">
+                  <div className="dash-course-card">
+                    {c.photoUrl
+                      ? <img src={c.photoUrl} alt={c.name} />
+                      : <div className="dash-course-placeholder">{c.topicInitial}</div>
+                    }
+                    <div className="dash-course-name">{c.name}</div>
                   </div>
-                )}
-                <h3>{c.name}</h3>
-                <p>{c.topic}</p>
-                <div className="course-meta">
-                  <span>{c.lessonCount} aula{c.lessonCount !== 1 ? 's' : ''}</span>
-                </div>
-                <div className="course-card-footer">
-                  <a href={`/font/pages/html.pages/courseView.html?courseId=${c.id}`}>Ver curso</a>
+                </a>
+                <div className="user-course-footer">
+                  <div className="user-course-meta">
+                    <span className="user-course-topic">{c.topic}</span>
+                    <span className="user-course-lessons">{c.lessonCount} aula{c.lessonCount !== 1 ? 's' : ''}</span>
+                  </div>
+                  <a href={`/font/pages/html.pages/courseView.html?courseId=${c.id}`} className="user-course-btn">Ver curso</a>
                 </div>
               </article>
             ))
@@ -91,5 +89,3 @@ function UserApp() {
 }
 
 createRoot(document.getElementById('user-app')).render(<UserApp />)
-
-
