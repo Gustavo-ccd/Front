@@ -548,11 +548,232 @@
     color:#0d1117;
 }
 
-@media(max-width:900px){  body{ zoom:0.98; } }
-@media(max-width:700px){  body{ zoom:0.88; } }
-@media(max-width:600px){  body{ zoom:0.82; } }
-@media(max-width:500px){  body{ zoom:0.75; } }
-@media(max-width:450px){  body{ zoom:0.68; } }
-@media(max-width:410px){  body{ zoom:0.62; } }
-@media(max-width:390px){  body{ zoom:0.55; } }
+@media(max-width:900px){
+    .courses-panel{
+        gap:16px;
+    }
+
+    .courses-actions{
+        justify-content:flex-start;
+    }
+
+    .courses-box{
+        padding:18px;
+        border-radius:20px;
+    }
+
+    .courses-table-header,
+    .courses-row{
+        grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 72px 150px;
+        gap:12px;
+    }
+
+    .course-form{
+        gap:16px;
+    }
+}
+
+@media(max-width:640px){
+    .courses-actions .primary-button{
+        width:100%;
+    }
+
+    .courses-box{
+        padding:16px 14px;
+        border-radius:18px;
+    }
+
+    .courses-table-header{
+        display:none;
+    }
+
+    .courses-table{
+        gap:14px;
+    }
+
+    .courses-row{
+        grid-template-columns:1fr;
+        gap:10px;
+        padding:16px 14px;
+        border:1px solid var(--border);
+        border-radius:16px;
+        background:var(--surface2);
+        box-shadow:0 10px 24px rgba(0,0,0,.14);
+    }
+
+    .courses-row span{
+        white-space:normal;
+        overflow:visible;
+        text-overflow:clip;
+    }
+
+    .courses-row > span{
+        display:grid;
+        gap:4px;
+        padding-bottom:10px;
+        border-bottom:1px solid rgba(48,54,61,.75);
+    }
+
+    .courses-row > span::before{
+        font-size:.72rem;
+        text-transform:uppercase;
+        letter-spacing:.04em;
+        color:var(--muted);
+        content:'Info';
+    }
+
+    .courses-row > span:nth-child(1)::before{ content:'Curso'; }
+    .courses-row > span:nth-child(2)::before{ content:'Tópico'; }
+    .courses-row > span:nth-child(3)::before{ content:'Aulas'; }
+
+    .courses-row-actions{
+        justify-self:stretch;
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+        padding-top:2px;
+    }
+
+    .courses-row-actions .secondary-button,
+    .courses-row-actions .remove-button{
+        width:100%;
+        min-height:42px;
+        padding:10px 12px;
+        justify-content:center;
+    }
+
+    .modal{
+        padding:12px;
+    }
+
+    .modal-content,
+    .modal-content-lg{
+        padding:20px 16px;
+        border-radius:18px;
+        max-height:calc(100vh - 24px);
+    }
+
+    .form-actions{
+        flex-direction:column;
+    }
+
+    .form-actions .primary-button,
+    .form-actions .secondary-button{
+        width:100%;
+        min-height:44px;
+    }
+
+    .file-input-wrap{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .file-btn,
+    .file-name-display{
+        width:100%;
+    }
+
+    .manage-section-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .lesson-item{
+        align-items:flex-start;
+        flex-direction:column;
+        padding:14px;
+    }
+
+    .lesson-item-actions{
+        width:100%;
+        justify-content:stretch;
+    }
+
+    .lesson-item-actions button{
+        flex:1;
+    }
+
+    .question-header-row,
+    .question-row,
+    .question-type-row{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .question-remove,
+    .qtype-btn,
+    .add-question-btn,
+    .primary-button,
+    .secondary-button,
+    .remove-button{
+        min-height:42px;
+    }
+}
+
+@media(max-width:420px){
+    .courses-panel{
+        gap:14px;
+    }
+
+    .courses-box{
+        padding:14px 12px;
+        border-radius:16px;
+    }
+
+    .courses-row{
+        padding:14px 12px;
+        gap:8px;
+    }
+
+    .courses-row-actions{
+        grid-template-columns:1fr;
+    }
+
+    .courses-row > span{
+        padding-bottom:8px;
+    }
+
+    .modal-content,
+    .modal-content-lg{
+        padding:18px 14px;
+        border-radius:16px;
+    }
+
+    .course-form input,
+    .course-form textarea,
+    .course-form select{
+        padding:12px 14px;
+        border-radius:12px;
+    }
+
+    .course-image-preview{
+        height:92px;
+    }
+
+    .lesson-video-badge{
+        max-width:100%;
+    }
+
+    .question-item{
+        padding:12px;
+        border-radius:12px;
+    }
+
+    .question-input,
+    .option-input,
+    .gabarito-input{
+        font-size:.92rem;
+    }
+
+    .option-letter,
+    .question-remove,
+    .add-question-btn{
+        width:34px;
+        height:34px;
+    }
+
+    .video-current-hint{
+        font-size:.8rem;
+    }
+}
 

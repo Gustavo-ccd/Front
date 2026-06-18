@@ -4,6 +4,11 @@
     box-sizing:border-box;
 }
 
+html{
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+}
+
 :root{
     --bg:#0d1117;
     --surface:#161b22;
@@ -20,6 +25,7 @@ body{
     background:var(--bg);
     color:var(--text);
     min-height:100vh;
+    overflow-x:hidden;
 }
 
 .page{
@@ -141,8 +147,40 @@ body{
     line-height:1.5;
 }
 
-@media(max-width:900px){  body{ zoom:0.75; } }
-@media(max-width:700px){  body{ zoom:0.65; } }
-@media(max-width:600px){  body{ zoom:0.55; } }
-@media(max-width:500px){  body{ zoom:0.45; } }
-@media(max-width:390px){  body{ zoom:0.35; } }
+@media(max-width:600px){
+    .modal-conteudo{
+        width:calc(100% - 24px);
+        max-width:none;
+        padding:22px 18px;
+        border-radius:14px;
+    }
+
+    .modal-conteudo h2{
+        margin-bottom:18px;
+        font-size:1.25rem;
+    }
+
+    .modal-lista{
+        margin:16px 0;
+        padding-left:18px;
+    }
+
+    .modal-botao,
+    .modal-campo input{
+        min-height:44px;
+    }
+}
+
+@media(max-width:420px){
+    .modal-conteudo{
+        width:calc(100% - 16px);
+        padding:18px 14px;
+    }
+
+    .modal-fechar{
+        width:32px;
+        height:32px;
+        right:12px;
+        top:12px;
+    }
+}
