@@ -140,3 +140,9 @@ body{
     margin-bottom:10px;
     line-height:1.5;
 }
+
+@media(max-width:900px){  body{ zoom:0.75; } }
+@media(max-width:700px){  body{ zoom:0.65; } }
+@media(max-width:600px){  body{ zoom:0.55; } }
+@media(max-width:500px){  body{ zoom:0.45; } }
+@media(max-width:390px){  body{ zoom:0.35; } }

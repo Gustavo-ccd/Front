@@ -80,6 +80,7 @@
   function fecharPerfil() { _perfilModal.classList.remove('ativo') }
 
   document.getElementById('profile-btn').addEventListener('click', abrirPerfil)
+  document.querySelector('.avatar').addEventListener('click', abrirPerfil)
   document.getElementById('perfil-fechar').addEventListener('click', fecharPerfil)
   _perfilModal.addEventListener('click', e => { if (e.target === _perfilModal) fecharPerfil() })
   document.getElementById('perfil-logout').addEventListener('click', () => {

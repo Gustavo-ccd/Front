@@ -547,3 +547,12 @@
     background:var(--accent);
     color:#0d1117;
 }
+
+@media(max-width:900px){  body{ zoom:0.98; } }
+@media(max-width:700px){  body{ zoom:0.88; } }
+@media(max-width:600px){  body{ zoom:0.82; } }
+@media(max-width:500px){  body{ zoom:0.75; } }
+@media(max-width:450px){  body{ zoom:0.68; } }
+@media(max-width:410px){  body{ zoom:0.62; } }
+@media(max-width:390px){  body{ zoom:0.55; } }
+

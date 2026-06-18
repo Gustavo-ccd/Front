@@ -333,126 +333,30 @@
     margin-bottom:20px;
 }
 
-body{ overflow-x:hidden; }
-
-@media(max-width:900px){
-    .topo{
-        flex-direction:column;
-        gap:16px;
-        padding:16px 6%;
-    }
-    .menu-topo{
-        width:100%;
-        justify-content:center;
-    }
-    .hero{
-        flex-direction:column;
-        align-items:stretch;
-        text-align:center;
-        padding:40px 6%;
-        gap:32px;
-    }
-    .hero-texto{
-        width:100%;
-        max-width:100%;
-    }
-    #ft1{
-        width:100%;
-        max-width:480px;
-        margin:0 auto;
-        display:block;
-    }
-    .planos{
-        grid-template-columns:1fr;
-        padding:0 6% 40px;
-    }
-    .cursos-catalogo{
-        padding:0 6% 40px;
-    }
-    .cursos-grid{
-        grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-    }
-    .apresentacao{
-        padding:40px 6%;
-    }
-    .apresentacao-fotos{
-        grid-template-columns:1fr;
-        gap:12px;
-    }
-    .apresentacao-foto-center{
-        order:-1;
-    }
-}
+body{ overflow-x:auto; }
 
 @media(max-width:600px){
-    .logo{
-        font-size:1.5rem;
-        letter-spacing:1px;
-    }
-    .menu-topo a{
-        flex:1;
-        text-align:center;
-        padding:9px 10px;
-        font-size:.88rem;
-    }
-    .hero{
-        padding:28px 5%;
-        gap:24px;
-    }
-    .hero-letter-row{
-        grid-template-columns:44px 1fr;
-        gap:12px;
-        margin-bottom:14px;
-    }
-    .hero-letter{
-        width:44px;
-        min-height:44px;
-        font-size:1.6rem;
-        border-radius:12px;
-    }
-    .hero-desc{
-        font-size:.88rem;
-        max-width:100%;
-    }
     .planos{
-        padding:0 5% 28px;
+        padding:0 3% 40px;
+        gap:10px;
     }
     .card-plano{
         min-height:auto;
-        padding:20px;
+        padding:14px 10px;
     }
-    .cursos-catalogo{
-        padding:0 5% 28px;
+    .card-plano h3{
+        font-size:.85rem;
+        margin-bottom:8px;
     }
-    .cursos-grid{
-        grid-template-columns:1fr;
+    .card-plano p{
+        font-size:.75rem;
+        line-height:1.5;
+        text-align:left;
+        margin-bottom:14px;
     }
-    .apresentacao{
-        padding:28px 5%;
-    }
-    .apresentacao h2{
-        font-size:1.2rem;
-    }
-    .apresentacao p{
-        font-size:.9rem;
-    }
-}
-
-@media(max-width:380px){
-    .logo{
-        font-size:1.2rem;
-    }
-    .hero-letter-row{
-        grid-template-columns:36px 1fr;
-        gap:10px;
-    }
-    .hero-letter{
-        width:36px;
-        min-height:36px;
-        font-size:1.2rem;
-        border-radius:10px;
-    }
-    .hero-desc{
-        font-size:.82rem;
+    .card-plano a{
+        font-size:.75rem;
+        padding:8px 10px;
+        text-align:center;
     }
 }
