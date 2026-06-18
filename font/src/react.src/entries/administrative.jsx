@@ -24,28 +24,30 @@ function AdminApp() {
         </div>
       </section>
 
-      <section className="top-courses">
-        <div className="top-courses-header">
-          <h2>Cursos cadastrados</h2>
-          <a href="/font/pages/html.pages/course.html" className="dash-link">Gerenciar cursos</a>
-        </div>
-        <div className="top-courses-list">
-          {courses.length === 0 ? (
-            <p className="dash-empty">
-              Nenhum curso cadastrado ainda.{' '}
-              <a href="/font/pages/html.pages/course.html">Adicionar curso</a>
-            </p>
-          ) : (
-            courses.map((c, i) => (
-              <div className="top-course-item" key={c.id}>
-                <span>{i + 1}. {c.name}</span>
-                <span>{c.topic}</span>
-                <span>{c.lessonCount} aula{c.lessonCount !== 1 ? 's' : ''}</span>
-              </div>
-            ))
-          )}
-        </div>
-      </section>
+      <div className="courses-section-container">
+        <section className="top-courses">
+          <div className="top-courses-header">
+            <h2>Cursos cadastrados</h2>
+            <a href="/font/pages/html.pages/course.html" className="dash-link">Gerenciar cursos</a>
+          </div>
+          <div className="top-courses-list">
+            {courses.length === 0 ? (
+              <p className="dash-empty">
+                Nenhum curso cadastrado ainda.{' '}
+                <a href="/font/pages/html.pages/course.html">Adicionar curso</a>
+              </p>
+            ) : (
+              courses.map((c, i) => (
+                <div className="top-course-item" key={c.id}>
+                  <span>{i + 1}. {c.name}</span>
+                  <span>{c.topic}</span>
+                  <span>{c.lessonCount} aula{c.lessonCount !== 1 ? 's' : ''}</span>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+      </div>
     </>
   )
 }
